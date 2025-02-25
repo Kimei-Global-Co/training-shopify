@@ -253,6 +253,33 @@
           font-size: 1.6rem;
         }
       }
+
+      .wishlisthero-floating {
+        position: absolute;
+        left: auto;
+        right: 10px !important;
+        top: 5px;
+        z-index: 2;
+        border-radius: 100%;
+      }
+      @media(min-width:1300px) {
+        .product-item__link.product-item__image--margins .wishlisthero-floating {
+            right: 50%;
+            margin-right: -295px;
+        }
+      }
+      .MuiTypography-h1,
+      .MuiTypography-h2,
+      .MuiTypography-h3,
+      .MuiTypography-h4,
+      .MuiTypography-h5,
+      .MuiTypography-h6,
+      .MuiButton-root,
+      .MuiCardHeader-title a {
+        font-family: 
+        , 
+         !important;
+      }
     {% endstyle %}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
