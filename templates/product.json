@@ -34,6 +34,10 @@
             "swatch_shape": "circle"
           }
         },
+        "wc_wishlist_club_wishlist_block_FcaUYz": {
+          "type": "shopify://apps/wc-wishlist-club/blocks/wishlist-block/582a225b-bd58-49d0-b0b6-9479192e79c5",
+          "settings": {}
+        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
@@ -65,6 +69,7 @@
         "title",
         "price",
         "variant_picker",
+        "wc_wishlist_club_wishlist_block_FcaUYz",
         "quantity_selector",
         "buy_buttons",
         "description",
