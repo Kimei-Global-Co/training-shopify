@@ -54,7 +54,7 @@
 }
 {% endschema %}
 
-<div class="banner">
+<div class="custom-banner {{ section.settings.vertical_alignment }}">
   <img
     src="{{ section.settings.image | img_url: 'large' }}"
     width="{{ section.settings.width }}"
