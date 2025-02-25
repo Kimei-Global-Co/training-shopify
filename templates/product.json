@@ -34,13 +34,27 @@
             "swatch_shape": "circle"
           }
         },
-        "wc_wishlist_club_wishlist_block_FcaUYz": {
-          "type": "shopify://apps/wc-wishlist-club/blocks/wishlist-block/582a225b-bd58-49d0-b0b6-9479192e79c5",
-          "settings": {}
-        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
+        },
+        "swish_formerly_wishlist_king_wishlist_button_block_EFVQLa": {
+          "type": "shopify://apps/swish-formerly-wishlist-king/blocks/wishlist-button-block/194f5011-a43c-4b22-b12e-eaf20dc4506a",
+          "settings": {
+            "button_style": "plain_accent_1",
+            "button_alignment": "center",
+            "button_content_alignment": "center",
+            "button_margin_top": 0,
+            "button_margin_bottom": 0,
+            "button_max_width": 0,
+            "button_padding_horizontal": 15,
+            "button_full_width": true,
+            "button_show_text": true,
+            "button_show_icon": true,
+            "icon_size": 18,
+            "icon_stroke_width": 1,
+            "icon_offset_vertical": 0
+          }
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -58,10 +72,6 @@
           "settings": {
             "share_label": "Share"
           }
-        },
-        "wc_wishlist_club_wishlist_bis_block_DHKwax": {
-          "type": "shopify://apps/wc-wishlist-club/blocks/wishlist-bis-block/582a225b-bd58-49d0-b0b6-9479192e79c5",
-          "settings": {}
         }
       },
       "block_order": [
@@ -69,12 +79,11 @@
         "title",
         "price",
         "variant_picker",
-        "wc_wishlist_club_wishlist_block_FcaUYz",
         "quantity_selector",
+        "swish_formerly_wishlist_king_wishlist_button_block_EFVQLa",
         "buy_buttons",
         "description",
-        "share",
-        "wc_wishlist_club_wishlist_bis_block_DHKwax"
+        "share"
       ],
       "settings": {
         "enable_sticky_info": true,
