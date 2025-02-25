@@ -143,12 +143,12 @@
     },
     "content_for_index": [],
     "blocks": {
-      "14198427981142892921": {
-        "type": "shopify://apps/se-wishlist-engine/blocks/app-embed/8f7c0857-8e71-463d-a168-8e133094753b",
+      "7870687481494312845": {
+        "type": "shopify://apps/wishlist-hero/blocks/app-embed/a9a5079b-59e8-47cb-b659-ecf1c60b9b72",
         "disabled": false,
         "settings": {
-          "wishlist_unfill_icon": "",
-          "wishlist_fill_icon": ""
+          "additionalWLButtonCssClasses": "",
+          "additionalWLCartBubbleCssClasses": ""
         }
       }
     },
