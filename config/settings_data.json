@@ -143,19 +143,6 @@
     },
     "content_for_index": [],
     "blocks": {
-      "1366455014531238847": {
-        "type": "shopify://apps/wishlist-hero/blocks/customize-style-block/a9a5079b-59e8-47cb-b659-ecf1c60b9b72",
-        "disabled": false,
-        "settings": {
-          "Btn_color": "",
-          "WishlistButtonTextColor": "",
-          "Ico_color": "",
-          "HeaderFontSize": 30,
-          "ProductNameFontSize": 18,
-          "PriceFontSize": 16,
-          "PriceColor": ""
-        }
-      },
       "7870687481494312845": {
         "type": "shopify://apps/wishlist-hero/blocks/app-embed/a9a5079b-59e8-47cb-b659-ecf1c60b9b72",
         "disabled": false,
@@ -165,6 +152,19 @@
           "additionalWLCartBubbleCssClasses": "",
           "extraHTMLToAppend": "",
           "disableAutomaticButtonAddition": true
+        }
+      },
+      "1366455014531238847": {
+        "type": "shopify://apps/wishlist-hero/blocks/customize-style-block/a9a5079b-59e8-47cb-b659-ecf1c60b9b72",
+        "disabled": false,
+        "settings": {
+          "Btn_color": "rgba(0,0,0,0)",
+          "WishlistButtonTextColor": "#ffffff",
+          "Ico_color": "#ff0000",
+          "HeaderFontSize": 30,
+          "ProductNameFontSize": 18,
+          "PriceFontSize": 16,
+          "PriceColor": "#121212"
         }
       }
     },
