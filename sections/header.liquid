@@ -278,6 +278,13 @@
           </div>
         {%- endif -%}
       </a>
+       <div
+      class="wishlist-engine"
+      data-product_id="{{  product.id }}"
+      data-variant_id="{{ product.selected_or_first_available_variant.id }}"
+      data-full_button="false"
+      data-css="true"
+    ></div>
     </div>
   </header>
 </{% if section.settings.sticky_header_type != 'none' %}sticky-header{% else %}div{% endif %}>
