@@ -38,11 +38,9 @@
           "type": "quantity_selector",
           "settings": {}
         },
-        "custom_liquid_HMwy6p": {
-          "type": "custom_liquid",
-          "settings": {
-            "custom_liquid": "<div class=\"wishlist-engine\" data-product_id=\"{{  product.id }}\" data-variant_id=\"{{ product.selected_or_first_available_variant.id }}\" data-full_button=\"false\" data-css=\"true\"></div>"
-          }
+        "se_wishlist_engine_product_page_C9BCVm": {
+          "type": "shopify://apps/se-wishlist-engine/blocks/Product-Page/8f7c0857-8e71-463d-a168-8e133094753b",
+          "settings": {}
         },
         "buy_buttons": {
           "type": "buy_buttons",
@@ -68,7 +66,7 @@
         "price",
         "variant_picker",
         "quantity_selector",
-        "custom_liquid_HMwy6p",
+        "se_wishlist_engine_product_page_C9BCVm",
         "buy_buttons",
         "description",
         "share"
