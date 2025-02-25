@@ -1,6 +1,28 @@
 {% schema %}
-  {
-    "name": "Section name",
-    "settings": []
-  }
+{
+  "name": "Custom Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Tiêu đề",
+      "default": "Chào mừng đến cửa hàng!"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Ảnh nền"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner"
+    }
+  ]
+}
 {% endschema %}
+
+<div class="banner">
+  <img src="{{ section.settings.image | img_url: 'large' }}" width="" height="" alt="Banner">
+  <h1>{{ section.settings.heading }}</h1>
+</div>
