@@ -40,7 +40,15 @@
       assign ratio = 1
     endif
   -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover">{% render 'wishlisthero-collection-product' with product: card_product %}
+  <div class="card-wrapper product-card-wrapper underline-links-hover">
+    {% render 'wishlisthero-collection-product' with product: card_product %}
+    <div
+      class="wishlist-engine"
+      data-product_id="{{  product.id }}"
+      data-variant_id="{{ product.selected_or_first_available_variant.id }}"
+      data-full_button="false"
+      data-css="true"
+    ></div>
     <div
       class="
         card card--{{ settings.card_style }}
@@ -576,7 +584,8 @@
       assign ratio = 0.8
     endif
   -%}
-  <div class="card-wrapper product-card-wrapper underline-links-hover">{% render 'wishlisthero-collection-product' with product: card_product %}
+  <div class="card-wrapper product-card-wrapper underline-links-hover">
+    {% render 'wishlisthero-collection-product' with product: card_product %}
     <div
       class="
         card card--{{ settings.card_style }}
