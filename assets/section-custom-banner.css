@@ -1,0 +1,19 @@
+.custom-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  background-color: #f4f4f4;
+}
+
+.custom-banner.left {
+  justify-content: flex-start;
+}
+
+.custom-banner.center {
+  justify-content: center;
+}
+
+.custom-banner.right {
+  justify-content: flex-end;
+}
