@@ -38,22 +38,10 @@
           "type": "quantity_selector",
           "settings": {}
         },
-        "swish_formerly_wishlist_king_wishlist_button_block_EFVQLa": {
-          "type": "shopify://apps/swish-formerly-wishlist-king/blocks/wishlist-button-block/194f5011-a43c-4b22-b12e-eaf20dc4506a",
+        "custom_liquid_HMwy6p": {
+          "type": "custom_liquid",
           "settings": {
-            "button_style": "plain_accent_1",
-            "button_alignment": "center",
-            "button_content_alignment": "center",
-            "button_margin_top": 0,
-            "button_margin_bottom": 0,
-            "button_max_width": 0,
-            "button_padding_horizontal": 15,
-            "button_full_width": true,
-            "button_show_text": true,
-            "button_show_icon": true,
-            "icon_size": 18,
-            "icon_stroke_width": 1,
-            "icon_offset_vertical": 0
+            "custom_liquid": "<div class=\"wishlist-engine\" data-product_id=\"{{  product.id }}\" data-variant_id=\"{{ product.selected_or_first_available_variant.id }}\" data-full_button=\"false\" data-css=\"true\"></div>"
           }
         },
         "buy_buttons": {
@@ -80,7 +68,7 @@
         "price",
         "variant_picker",
         "quantity_selector",
-        "swish_formerly_wishlist_king_wishlist_button_block_EFVQLa",
+        "custom_liquid_HMwy6p",
         "buy_buttons",
         "description",
         "share"
