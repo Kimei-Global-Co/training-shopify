@@ -25,24 +25,24 @@
     },
     {
     "type": "select",
-  "id": "vertical_alignment",
-  "label": "Vertical alignment",
-  "options": [
-    {
-      "value": "top",
-      "label": "Top"
-    },
-    {
-      "value": "middle",
-      "label": "Middle"
-    },
-    {
-      "value": "bottom",
-      "label": "Bottom"
-    }
-  ],
-  "default": "middle"
-}
+    "id": "vertical_alignment",
+    "label": "Vertical alignment",
+    "options": [
+      {
+        "value": "left",
+        "label": "Left"
+      },
+      {
+        "value": "center",
+        "label": "Center"
+      },
+      {
+        "value": "right",
+        "label": "Right"
+      }
+    ],
+    "default": "center"
+  }
   ],
   "presets": [
     {
@@ -53,6 +53,11 @@
 {% endschema %}
 
 <div class="banner">
-  <img src="{{ section.settings.image | img_url: 'large' }}" width="" height="" alt="Banner">
+  <img
+    src="{{ section.settings.image | img_url: 'large' }}"
+    width="{{ section.settings.width }}"
+    height="{{ section.settings.height }}"
+    alt="Banner"
+  >
   <h1>{{ section.settings.heading }}</h1>
 </div>
