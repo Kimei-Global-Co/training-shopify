@@ -379,6 +379,64 @@ document.addEventListener("DOMContentLoaded", function () {
         cursor: pointer;
       }
     </style>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  var isLoggedIn = {{ customer ? 'true' : 'false' }};
+
+  function customizeWishlistPopup() {
+    setTimeout(() => {
+      var wishlistPopup = document.querySelector(".MuiDialog-root");
+
+      if (!wishlistPopup || isLoggedIn) return;
+
+      // Replace content with login form
+      wishlistPopup.innerHTML = `
+        <div class="custom-wishlist-popup">
+          <h2>Đăng nhập để sử dụng Wishlist</h2>
+          <form method="post" action="/account/login">
+            <input type="email" name="customer[email]" placeholder="Email" required>
+            <input type="password" name="customer[password]" placeholder="Mật khẩu" required>
+            <button type="submit">Đăng nhập</button>
+          </form>
+          <button class="close-wishlist">Đóng</button>
+        </div>
+      `;
+
+      // Close popup event
+      document.querySelector(".close-wishlist").addEventListener("click", function () {
+        wishlistPopup.style.display = "none";
+      });
+    }, 500);
+  }
+
+  // When wishlist button is clicked, check login status
+  document.addEventListener("click", function (event) {
+    if (event.target.closest(".swym-wishlist-button")) {
+      customizeWishlistPopup();
+    }
+  });
+});
+    </script>
+
+    <style>
+      .custom-wishlist-popup {
+        text-align: center;
+        padding: 20px;
+      }
+      .custom-wishlist-popup input {
+        width: 100%;
+        margin: 10px 0;
+        padding: 8px;
+      }
+      .custom-wishlist-popup button {
+        background: black;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+    </style>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
