@@ -276,8 +276,8 @@
       .MuiTypography-h6,
       .MuiButton-root,
       .MuiCardHeader-title a {
-        font-family: 
-        , 
+        font-family:
+        ,
          !important;
       }
     {% endstyle %}
@@ -323,6 +323,62 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  var isLoggedIn = {{ customer ? 'true' : 'false' }};
+
+  function injectLoginForm() {
+    setTimeout(() => {
+      var dialog = document.querySelector(".MuiDialog-root");
+      if (!dialog || isLoggedIn) return;
+
+      // Xóa nội dung cũ và thêm form đăng nhập Shopify
+      dialog.innerHTML = `
+        <div class="custom-wishlist-popup">
+          <h2>Đăng nhập để sử dụng Wishlist</h2>
+          <form method="post" action="/account/login">
+            <input type="email" name="customer[email]" placeholder="Email" required>
+            <input type="password" name="customer[password]" placeholder="Mật khẩu" required>
+            <button type="submit">Đăng nhập</button>
+          </form>
+          <button class="close-popup">Đóng</button>
+        </div>
+      `;
+
+      // Thêm sự kiện đóng popup
+      document.querySelector(".close-popup").addEventListener("click", function () {
+        dialog.style.display = "none";
+      });
+    }, 500);
+  }
+
+  // Gọi function khi dialog Wishlist mở
+  document.addEventListener("click", function (event) {
+    if (event.target.closest(".swym-wishlist-button")) {
+      injectLoginForm();
+    }
+  });
+});
+    </script>
+
+    <style>
+      .custom-wishlist-popup {
+        text-align: center;
+        padding: 20px;
+      }
+      .custom-wishlist-popup input {
+        width: 100%;
+        margin: 10px 0;
+        padding: 8px;
+      }
+      .custom-wishlist-popup button {
+        background: black;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
