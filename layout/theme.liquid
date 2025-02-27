@@ -386,7 +386,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function customizeWishlistPopup() {
     setTimeout(() => {
       var wishlistPopup = document.querySelector(".MuiDialogContent-root");
-
+      console.log(wishlistPopup)
       if (!wishlistPopup || isLoggedIn) return;
 
       // Replace content with login form
