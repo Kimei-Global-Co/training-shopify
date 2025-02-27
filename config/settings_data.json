@@ -143,28 +143,24 @@
     },
     "content_for_index": [],
     "blocks": {
-      "7870687481494312845": {
-        "type": "shopify://apps/wishlist-hero/blocks/app-embed/a9a5079b-59e8-47cb-b659-ecf1c60b9b72",
+      "5946647744298494267": {
+        "type": "shopify://apps/wishlist-plus/blocks/wishlist-app-embed/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
         "disabled": false,
         "settings": {
-          "customThemeName": "~",
-          "additionalWLButtonCssClasses": "",
-          "additionalWLCartBubbleCssClasses": "",
-          "extraHTMLToAppend": "",
-          "disableAutomaticButtonAddition": true
-        }
-      },
-      "1366455014531238847": {
-        "type": "shopify://apps/wishlist-hero/blocks/customize-style-block/a9a5079b-59e8-47cb-b659-ecf1c60b9b72",
-        "disabled": false,
-        "settings": {
-          "Btn_color": "rgba(0,0,0,0)",
-          "WishlistButtonTextColor": "#ffffff",
-          "Ico_color": "#ffffff",
-          "HeaderFontSize": 30,
-          "ProductNameFontSize": 18,
-          "PriceFontSize": 16,
-          "PriceColor": "#121212"
+          "storefront_layout_enabled": true,
+          "storefront_layout_type": "as-section",
+          "storefront_layout_collection_enabled": true,
+          "storefront_layout_primary_bg_color": "#f3f3f3",
+          "storefront_layout_primary_text_color": "#ffffff",
+          "storefront_layout_secondary_bg_color": "#f4f8fe",
+          "storefront_layout_secondary_text_color": "#121212",
+          "storefront_layout_ui_border_radius": 6,
+          "storefront_layout_notification_enabled_as_default": true,
+          "storefront_layout_notification_position": "center",
+          "storefront_layout_action_popup_position": "center",
+          "storefront_layout_drawer_position": "left",
+          "storefront_layout_drawer_width": 400,
+          "storefront_layout_as_section_page": ""
         }
       },
       "10274264662263595587": {
@@ -176,41 +172,21 @@
           "swym_collections_vertical_offset": 0,
           "swym_collections_horizontal_offset": 0,
           "swym_collections_button_size": 25,
-          "swym_collections_icon_color": "#000000",
+          "swym_collections_icon_color": "#121212",
           "swym_collections_product_link_selector": "-",
           "swym_collections_product_tile_selector": "-",
-          "enable_variant_selector": false,
-          "swym_add_to_wishlist_title_color": "#333",
+          "enable_variant_selector": true,
+          "swym_add_to_wishlist_title_color": "#333333",
           "swym_variant_selector_font_size_1": 14,
-          "swym_variant_selector_popup_bg_color": "#fff",
-          "swym_variant_selector_section_heading_color": "#000",
+          "swym_variant_selector_popup_bg_color": "#ffffff",
+          "swym_variant_selector_section_heading_color": "#121212",
           "swym_variant_selector_section_heading_font_size_2": 12,
           "swym_variant_selector_choose_create_text": "Choose or Create new Wishlist",
-          "swym_variant_selector_wishlist_btn_bg_color": "#292929",
-          "swym_variant_selector_wishlist_btn_color": "#fff",
-          "swym_variant_selector_product_detail_font_color": "#fff",
+          "swym_variant_selector_wishlist_btn_bg_color": "#f70e0e",
+          "swym_variant_selector_wishlist_btn_color": "#ffffff",
+          "swym_variant_selector_product_detail_font_color": "#ffffff",
           "swym_variant_selector_create_list_placeholder_text": "Enter wishlist name",
           "swym_variant_selector_create_list_title": "Name Your Wishlist"
-        }
-      },
-      "5946647744298494267": {
-        "type": "shopify://apps/wishlist-plus/blocks/wishlist-app-embed/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
-        "disabled": false,
-        "settings": {
-          "storefront_layout_enabled": true,
-          "storefront_layout_type": "as-drawer",
-          "storefront_layout_collection_enabled": true,
-          "storefront_layout_primary_bg_color": "#000000",
-          "storefront_layout_primary_text_color": "#ffffff",
-          "storefront_layout_secondary_bg_color": "#F4F8FE",
-          "storefront_layout_secondary_text_color": "#333333",
-          "storefront_layout_ui_border_radius": 6,
-          "storefront_layout_notification_enabled_as_default": true,
-          "storefront_layout_notification_position": "left",
-          "storefront_layout_action_popup_position": "left",
-          "storefront_layout_drawer_position": "left",
-          "storefront_layout_drawer_width": 400,
-          "storefront_layout_as_section_page": ""
         }
       }
     },
