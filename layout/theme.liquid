@@ -419,22 +419,65 @@ document.addEventListener("DOMContentLoaded", function () {
     </script>
 
     <style>
-      .custom-wishlist-popup {
-        text-align: center;
+            .custom-wishlist-popup {
+              text-align: center;
+              padding: 20px;
+            }
+            .custom-wishlist-popup input {
+              width: 100%;
+              margin: 10px 0;
+              padding: 8px;
+            }
+            .custom-wishlist-popup button {
+              background: black;
+              color: white;
+              padding: 10px;
+              border: none;
+              cursor: pointer;
+              margin-top: 10px;
+            }
+            .MuiDialog-root {
+        background: rgba(0, 0, 0, 0.6) !important;
+      }
+
+      .MuiDialog-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .MuiDialog-paper {
+        background-color: #fff !important;
+        border-radius: 10px;
         padding: 20px;
+        max-width: 400px;
+        width: 90%;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
       }
-      .custom-wishlist-popup input {
-        width: 100%;
-        margin: 10px 0;
-        padding: 8px;
+
+      /* Custom Title */
+      .MuiDialogTitle-root {
+        font-size: 22px !important;
+        font-weight: bold;
+        text-align: center;
+        color: #333 !important;
       }
-      .custom-wishlist-popup button {
-        background: black;
-        color: white;
-        padding: 10px;
-        border: none;
-        cursor: pointer;
-        margin-top: 10px;
+
+      /* Custom Close Button */
+      .MuiDialogActions-root {
+        display: flex;
+        justify-content: center;
+      }
+
+      .MuiButton-root {
+        background: black !important;
+        color: white !important;
+        padding: 10px 20px !important;
+        border-radius: 5px !important;
+      }
+
+      .MuiButton-root:hover {
+        background: #444 !important;
       }
     </style>
   </head>
