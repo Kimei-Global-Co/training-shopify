@@ -160,7 +160,7 @@
         "settings": {
           "Btn_color": "rgba(0,0,0,0)",
           "WishlistButtonTextColor": "#ffffff",
-          "Ico_color": "#121212",
+          "Ico_color": "#ffffff",
           "HeaderFontSize": 30,
           "ProductNameFontSize": 18,
           "PriceFontSize": 16,
