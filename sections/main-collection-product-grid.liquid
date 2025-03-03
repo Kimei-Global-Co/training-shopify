@@ -189,6 +189,7 @@
         {%- endif -%}
       </div>
     </div>
+    {% render 'infinite-scroll', next_page: paginate.next.url, page_size: paginate.pages, end_text: 'End' %}
   {%- endpaginate -%}
   {% if section.settings.image_shape == 'arch' %}
     {{ 'mask-arch.svg' | inline_asset_content }}
