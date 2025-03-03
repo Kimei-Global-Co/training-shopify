@@ -42,6 +42,7 @@
   -%}
   <div class="card-wrapper product-card-wrapper underline-links-hover">
     {% render 'wishlisthero-collection-product' with product: card_product %}
+    {% render 'product-flag' with product: card_product %}
     <div
       class="
         card card--{{ settings.card_style }}
@@ -579,6 +580,7 @@
   -%}
   <div class="card-wrapper product-card-wrapper underline-links-hover">
     {% render 'wishlisthero-collection-product' with product: card_product %}
+    {% render 'product-flag' with product: card_product %}
     <div
       class="
         card card--{{ settings.card_style }}
