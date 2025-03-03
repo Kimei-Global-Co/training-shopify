@@ -38,10 +38,6 @@
           "type": "quantity_selector",
           "settings": {}
         },
-        "se_wishlist_engine_product_page_C9BCVm": {
-          "type": "shopify://apps/se-wishlist-engine/blocks/Product-Page/8f7c0857-8e71-463d-a168-8e133094753b",
-          "settings": {}
-        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -66,7 +62,6 @@
         "price",
         "variant_picker",
         "quantity_selector",
-        "se_wishlist_engine_product_page_C9BCVm",
         "buy_buttons",
         "description",
         "share"
@@ -104,10 +99,29 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "1740969317c6e0b49e": {
+      "type": "apps",
+      "blocks": {
+        "kiwi_size_chart_recommender_kiwi_sizing_yeXQwP": {
+          "type": "shopify://apps/kiwi-size-chart-recommender/blocks/kiwiSizing/b7369922-bf15-44ce-a121-a22a8fcbc4b0",
+          "settings": {
+            "product": "{{product}}",
+            "waitForElementSelector": ""
+          }
+        }
+      },
+      "block_order": [
+        "kiwi_size_chart_recommender_kiwi_sizing_yeXQwP"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "main",
-    "related-products"
+    "related-products",
+    "1740969317c6e0b49e"
   ]
 }
