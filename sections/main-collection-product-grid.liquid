@@ -125,7 +125,12 @@
         {% endif %}
       >
         {%- if collection.products.size == 0 -%}
-          <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
+          <div
+            class="collection collection--empty page-width"
+            id="product-grid"
+            data-id="{{ section.id }}"
+            data-section-id="{{ section.id }}"
+          >
             <div class="loading-overlay gradient"></div>
             <div class="title-wrapper center">
               <h2 class="title title--primary">
@@ -145,6 +150,7 @@
             <div class="loading-overlay gradient"></div>
             <ul
               id="product-grid"
+              data-section-id="{{ section.id }}"
               data-id="{{ section.id }}"
               class="
                 grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down
@@ -416,3 +422,21 @@
   ]
 }
 {% endschema %}
+<script>
+  var variantDataMap{{ section.id | replace: '-', '_' }} = {
+    {% assign isFirstVariant = true %}
+    {% for product in collection.products %}
+      {% for variant in product.variants %}
+        {% if variant.featured_media %}
+          {% unless isFirstVariant %},{% endunless %}
+          "{{ variant.id }}": {
+            "imageUrl": "{{ variant.featured_media | img_url: 'master' }}",
+            "productUrl": "{{ product.url | append: '?variant=' | append: variant.id }}"
+          }
+          {% assign isFirstVariant = false %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  };
+</script>
+{{ 'card-product-variant-selection-custom.js' | asset_url | script_tag }}
