@@ -423,7 +423,8 @@
 }
 {% endschema %}
 <script>
-  var variantDataMap = {
+  var variantDataMap = window['variantDataMap'];
+  var variantDataMap1 = {
     {% assign isFirstVariant = true %}
     {% for product in collection.products %}
       {% for variant in product.variants %}
@@ -438,5 +439,6 @@
       {% endfor %}
     {% endfor %}
   };
+  let variantDataMap = {...variantDataMap, ...variantDataMap1};
 </script>
 {{ 'card-product-variant-selection-custom.js' | asset_url | script_tag }}
