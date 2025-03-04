@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     productGrids.forEach(function(productGrid) {
       var sectionId = productGrid.getAttribute('data-section-id');
       var variantDataMap = window['variantDataMap'];
-      
+      console.log(55555, variantDataMap)
       productGrid.addEventListener('change', function(e) {
           if (e.target.matches('input[type="radio"][data-section-id="' + sectionId + '"]')) {
   
