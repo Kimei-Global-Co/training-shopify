@@ -7,13 +7,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
       productGrid.addEventListener('change', function(e) {
           if (e.target.matches('input[type="radio"][data-section-id="' + sectionId + '"]')) {
-  
+              console.log(1, variantDataMap)
+              console.log(2, variantDataMapTemplateMap)
               var card = e.target.closest(`.card-product-custom-div[data-section-id="${sectionId}"]`);
               var variantId = e.target.getAttribute('data-variant-id');
               var variantData = variantDataMap[variantId];
               var variantDataMaptemplate = variantDataMapTemplateMap[variantId];
-                    console.log(1, variantDataMap)
-              console.log(2, variantDataMapTemplateMap)
+              
               if (!variantData) {
                 console.log('No data found for variant:', variantId);
               }
