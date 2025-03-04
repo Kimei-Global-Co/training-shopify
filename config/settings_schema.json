@@ -1479,10 +1479,10 @@
         "content": "Setting color price sale on page"
       },
       {
-        "type": "color_scheme",
+        "type": "color",
         "id": "price_sale_color_scheme",
         "label": "Color Price Sale",
-        "default": "scheme-1"
+        "default": "#000000"
       }
     ]
   }
