@@ -1463,11 +1463,10 @@
         "id": "cart_color_scheme",
         "label": "t:sections.all.colors.label",
         "default": "scheme-1"
-      },
-      
+      }
     ]
   },
-    {
+  {
     "name": "Price",
     "settings": [
       {
@@ -1483,6 +1482,41 @@
         "id": "price_sale_color",
         "label": "Color Price Sale",
         "default": "#000000"
+      }
+    ]
+  },
+  {
+    "name": "Collection Color swatches",
+    "settings": [
+      {
+        "type": "select",
+        "id": "CollectionswatchStyle",
+        "label": "Swatch style",
+        "options": [
+          {
+            "value": "round",
+            "label": "Round"
+          },
+          {
+            "value": "square",
+            "label": "Square"
+          },
+          {
+            "value": "square-round-corners",
+            "label": "Square round corners"
+          }
+        ],
+        "default": "round"
+      },
+      {
+        "type": "range",
+        "id": "CollectionswatchSize",
+        "min": 20,
+        "max": 120,
+        "step": 2,
+        "unit": "px",
+        "label": "Swatch size",
+        "default": 40
       }
     ]
   }
