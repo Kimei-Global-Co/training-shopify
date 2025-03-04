@@ -1463,6 +1463,26 @@
         "id": "cart_color_scheme",
         "label": "t:sections.all.colors.label",
         "default": "scheme-1"
+      },
+      
+    ]
+  },
+    {
+    "name": "Price",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Price Sale"
+      },
+      {
+        "type": "paragraph",
+        "content": "Setting color price sale on page"
+      },
+      {
+        "type": "color_scheme",
+        "id": "price_sale_color_scheme",
+        "label": "Color Price Sale",
+        "default": "scheme-1"
       }
     ]
   }
