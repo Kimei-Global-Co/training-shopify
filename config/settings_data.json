@@ -127,6 +127,7 @@
     "show_cart_note": false,
     "cart_drawer_collection": "",
     "cart_color_scheme": "scheme-1",
+    "price_sale_color": "#ff0000",
     "price_sale_color_scheme": "#ff0000",
     "sections": {
       "main-password-header": {
