@@ -142,26 +142,6 @@
                 }}
               </h2>
             </div>
-            <script>
-              let variantDataMap = window['variantDataMap'];
-              var variantDataMap1 = {
-                {% assign isFirstVariant = true %}
-                {% for product in collection.products %}
-                  {% for variant in product.variants %}
-                    {% if variant.featured_media %}
-                      {% unless isFirstVariant %},{% endunless %}
-                      "{{ variant.id }}": {
-                        "imageUrl": "{{ variant.featured_media | img_url: 'master' }}",
-                        "productUrl": "{{ product.url | append: '?variant=' | append: variant.id }}"
-                      }
-                      {% assign isFirstVariant = false %}
-                    {% endif %}
-                  {% endfor %}
-                {% endfor %}
-              };
-              variantDataMap = {...variantDataMap, ...variantDataMap1};
-            </script>
-            {{ 'card-product-variant-selection-custom.js' | asset_url | script_tag }}
           </div>
         {%- else -%}
           <div
@@ -204,27 +184,6 @@
                     section_id: section.id
                   %}
                 </li>
-                <script>
-                  let variantDataMap = window['variantDataMap'];
-                  var variantDataMap1 = {
-                    {% assign isFirstVariant = true %}
-                    {% for product in collection.products %}
-                      {% for variant in product.variants %}
-                        {% if variant.featured_media %}
-                          {% unless isFirstVariant %},{% endunless %}
-                          "{{ variant.id }}": {
-                            "imageUrl": "{{ variant.featured_media | img_url: 'master' }}",
-                            "productUrl": "{{ product.url | append: '?variant=' | append: variant.id }}"
-                          }
-                          {% assign isFirstVariant = false %}
-                        {% endif %}
-                      {% endfor %}
-                    {% endfor %}
-                  };
-                  variantDataMap = {...variantDataMap, ...variantDataMap1};
-                  console.log(123, variantDataMap)
-                </script>
-                {{ 'card-product-variant-selection-custom.js' | asset_url | script_tag }}
                 {%- assign skip_card_product_styles = true -%}
               {%- endfor -%}
             </ul>
@@ -463,3 +422,21 @@
   ]
 }
 {% endschema %}
+<script>
+  var variantDataMap = {
+    {% assign isFirstVariant = true %}
+    {% for product in collection.products %}
+      {% for variant in product.variants %}
+        {% if variant.featured_media %}
+          {% unless isFirstVariant %},{% endunless %}
+          "{{ variant.id }}": {
+            "imageUrl": "{{ variant.featured_media | img_url: 'master' }}",
+            "productUrl": "{{ product.url | append: '?variant=' | append: variant.id }}"
+          }
+          {% assign isFirstVariant = false %}
+        {% endif %}
+      {% endfor %}
+    {% endfor %}
+  };
+</script>
+{{ 'card-product-variant-selection-custom.js' | asset_url | script_tag }}
