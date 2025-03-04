@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var variantDataMap = window['variantDataMap' + sectionId.replace(/-/g, '_')];
       var variantDataMapTemplateMap = window['variantDataMaptemplate' + sectionId.replace(/-/g, '_')];
                     console.log(1, variantData)
-              console.log(2. variantDataMapTemplateMap)
+              console.log(2, variantDataMapTemplateMap)
       productGrid.addEventListener('change', function(e) {
           if (e.target.matches('input[type="radio"][data-section-id="' + sectionId + '"]')) {
   
