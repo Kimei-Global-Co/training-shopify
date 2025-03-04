@@ -423,9 +423,8 @@
 }
 {% endschema %}
 <script>
-<script>
   var variantDataMap{{ section.id | replace: '-', '_' }} = {};
-  
+
   {% for product in collection.products %}
     {% for variant in product.variants %}
       {% if variant.featured_media %}
