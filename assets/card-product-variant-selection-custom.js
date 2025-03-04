@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var productGrids = document.querySelectorAll('.grid.product-grid');
     productGrids.forEach(function(productGrid) {
       var sectionId = productGrid.getAttribute('data-section-id');
-      var variantDataMap = window['variantDataMap' + sectionId.replace(/-/g, '_')];
+      var variantDataMap = window['variantDataMap'];
       
       productGrid.addEventListener('change', function(e) {
           if (e.target.matches('input[type="radio"][data-section-id="' + sectionId + '"]')) {
