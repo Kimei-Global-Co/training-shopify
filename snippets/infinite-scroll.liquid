@@ -249,7 +249,6 @@
                 i.searchParams.set("page", e);
                 const r = i.href;
                 console.log(r);
-              console.log({{product}})
                 fetch(`${r}`, { method: "GET", headers: { "Content-Type": "text/html" } })
                     .then((e) => e.text())
                     .then((e) => {
