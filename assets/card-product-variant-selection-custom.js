@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var sectionId = productGrid.getAttribute('data-section-id');
       var variantDataMap = window['variantDataMap' + sectionId.replace(/-/g, '_')];
       var variantDataMapTemplateMap = window['variantDataMaptemplate' + sectionId.replace(/-/g, '_')];
-                    console.log(1, variantData)
-              console.log(2, variantDataMapTemplateMap)
+
       productGrid.addEventListener('change', function(e) {
           if (e.target.matches('input[type="radio"][data-section-id="' + sectionId + '"]')) {
   
@@ -13,7 +12,8 @@ document.addEventListener('DOMContentLoaded', function() {
               var variantId = e.target.getAttribute('data-variant-id');
               var variantData = variantDataMap[variantId];
               var variantDataMaptemplate = variantDataMapTemplateMap[variantId];
-
+                    console.log(1, variantDataMap)
+              console.log(2, variantDataMapTemplateMap)
               if (!variantData) {
                 console.log('No data found for variant:', variantId);
               }
