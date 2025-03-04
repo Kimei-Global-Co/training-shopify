@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     productGrids.forEach(function(productGrid) {
       var sectionId = productGrid.getAttribute('data-section-id');
       var variantDataMap = window['variantDataMap' + sectionId.replace(/-/g, '_')];
+      var variantDataMapTemplateMap = window['variantDataMaptemplate' + sectionId.replace(/-/g, '_')];
       
       productGrid.addEventListener('change', function(e) {
           if (e.target.matches('input[type="radio"][data-section-id="' + sectionId + '"]')) {
@@ -10,10 +11,16 @@ document.addEventListener('DOMContentLoaded', function() {
               var card = e.target.closest(`.card-product-custom-div[data-section-id="${sectionId}"]`);
               var variantId = e.target.getAttribute('data-variant-id');
               var variantData = variantDataMap[variantId];
+              var variantDataMaptemplate = variantDataMapTemplateMap[variantId];
   
               if (!variantData) {
-                  console.log('No data found for variant:', variantId);
-                  return;
+                console.log('No data found for variant:', variantId);
+              }
+              if(!variantDataMaptemplate) {
+                console.log('No data found for variant 1:', variantId);
+                return
+              } else {
+                variantData = variantDataMaptemplate
               }
               // Update the product image with lazy loading logic
               var productImageElement = card.querySelector('.card__media img');
