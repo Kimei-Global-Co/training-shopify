@@ -423,17 +423,20 @@
 }
 {% endschema %}
 <script>
-  var variantDataMap{{ section.id | replace: '-', '_' }} = {};
-
-  {% for product in collection.products %}
-    {% for variant in product.variants %}
-      {% if variant.featured_media %}
-        variantDataMap{{ section.id | replace: '-', '_' }}["{{ variant.id }}"] = {
-          imageUrl: "{{ variant.featured_media | img_url: '533x533' }}",
-          productUrl: "{{ product.url | append: '?variant=' | append: variant.id }}"
-        };
-      {% endif %}
+  var variantDataMap = {
+    {% assign isFirstVariant = true %}
+    {% for product in collection.products %}
+      {% for variant in product.variants %}
+        {% if variant.featured_media %}
+          {% unless isFirstVariant %},{% endunless %}
+          "{{ variant.id }}": {
+            "imageUrl": "{{ variant.featured_media | img_url: 'master' }}",
+            "productUrl": "{{ product.url | append: '?variant=' | append: variant.id }}"
+          }
+          {% assign isFirstVariant = false %}
+        {% endif %}
+      {% endfor %}
     {% endfor %}
-  {% endfor %}
+  };
 </script>
 {{ 'card-product-variant-selection-custom.js' | asset_url | script_tag }}
