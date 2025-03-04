@@ -104,7 +104,7 @@
           </span>
         {%- endunless -%}
         <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.sale_price' | t }}</span>
-        <span class="price-item price-item--sale price-item--last">
+        <span style="color: {{ settings.price_sale_color }}" class="price-item price-item--sale price-item--last">
           {{ money_price }}
         </span>
       </div>
