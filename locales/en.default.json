@@ -426,7 +426,8 @@
     "log_out": "Log out",
     "login_page": {
       "cancel": "Cancel",
-      "create_account": "Create account",
+      "create_account": "New member",
+      "create_account_subtext": "If you are using our service or purchasing for the first time, please proceed to register as a new member.",
       "email": "Email",
       "forgot_password": "Forgot your password?",
       "guest_continue": "Continue",
@@ -479,12 +480,20 @@
       "success": "We've sent you an email with a link to update your password."
     },
     "register": {
-      "title": "Create account",
+      "title": "New member",
       "first_name": "First name",
       "last_name": "Last name",
       "email": "Email",
       "password": "Password",
-      "submit": "Create"
+      "submit": "Create",
+      "male": "Male",
+      "female": "Female",
+      "select_gender": "Select gender",
+      "birthday": "Birthday",
+      "cancel": "Cancel",
+      "gender": "Gender",
+      "choose": "Choose",
+      "choose_date_before": "Please choose a date before today!"
     },
     "reset_password": {
       "title": "Reset account password",
