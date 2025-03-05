@@ -244,6 +244,7 @@
   
         fetchNextPage(e) {
             if (e <= this.dataset.pageSize) {
+                let newVariantDataMap = {};
                 const t = `{{ shop.url }}/${this.dataset.next}`;
                 const i = new URL(t);
                 i.searchParams.set("page", e);
@@ -253,6 +254,25 @@
                     .then((e) => e.text())
                     .then((e) => {
                         const t = new DOMParser().parseFromString(e, "text/html");
+                        const scripts = t.querySelectorAll("script");
+                        scripts.forEach(script => {
+                            try {
+                              if(script.innerText.includes("variantDataMap")) {
+                                const newScript = document.createElement("script");
+                                newScript.text = script.innerText;
+                                document.body.appendChild(newScript);
+                                if (typeof variantDataMap !== "undefined" && Object.keys(variantDataMap).length > 0) {
+                                  newVariantDataMap = { ...variantDataMap };
+                                }
+                              }
+                            } catch (error) {
+                                console.error("Lỗi khi thực thi script:", error);
+                            }
+                        });
+                        if (!window.variantDataMap) {
+                            window.variantDataMap = {};
+                        }
+                        window.variantDataMap = { ...window.variantDataMap, ...newVariantDataMap }
                         const i = t.querySelector(this.gridName).innerHTML;
                         this.gridContainer.insertAdjacentHTML("beforeend", i);
                     })

@@ -431,7 +431,9 @@
           {% unless isFirstVariant %},{% endunless %}
           "{{ variant.id }}": {
             "imageUrl": "{{ variant.featured_media | img_url: 'master' }}",
-            "productUrl": "{{ product.url | append: '?variant=' | append: variant.id }}"
+            "productUrl": "{{ product.url | append: '?variant=' | append: variant.id }}",
+            "price": "{{ variant.price | money }}",
+            "compareAtPrice": "{{ variant.compare_at_price | money }}"
           }
           {% assign isFirstVariant = false %}
         {% endif %}
