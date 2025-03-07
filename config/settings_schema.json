@@ -1517,6 +1517,12 @@
         "unit": "px",
         "label": "Swatch size",
         "default": 40
+      },
+      {
+        "type": "text",
+        "id": "domain_generate_api",
+        "label": "Domain generate api",
+        "default": "http://localhost:8005"
       }
     ]
   }

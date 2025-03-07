@@ -1,9 +1,213 @@
 {{ 'customer.css' | asset_url | stylesheet_tag }}
 
+<script>
+  // Auto load event
+  document.addEventListener('DOMContentLoaded', function () {
+    const shopDomain = '{{ shop.domain }}';
+    const apiCustomerCreateUrl = '{{ settings.domain_generate_api }}' + '/api/shopify/customers/create';
+    let current_date = '{{ "now" | date: "%Y-%m-%d" }}';
+    let values = {};
+
+    // Get year, month, day in select box
+    const yearSelect = document.getElementById('birthday-year');
+    const monthSelect = document.getElementById('birthday-month');
+    const daySelect = document.getElementById('birthday-day');
+    const hiddenBirthday = document.querySelector('input[name="birthday"]');
+    const currentYear = new Date().getFullYear();
+
+    for (let year = currentYear; year >= 1900; year--) {
+      let option = new Option(year, year);
+      yearSelect.add(option);
+    }
+
+    for (let month = 1; month <= 12; month++) {
+      let option = new Option(month, month);
+      monthSelect.add(option);
+    }
+
+    function updateDays() {
+      daySelect.innerHTML = '<option value="">Day</option>'; // Reset first
+      const year = parseInt(yearSelect.value);
+      const month = parseInt(monthSelect.value);
+      if (!year || !month) return;
+
+      const daysInMonth = new Date(year, month, 0).getDate();
+      for (let day = 1; day <= daysInMonth; day++) {
+        let option = new Option(day, day);
+        daySelect.add(option);
+      }
+    }
+
+    function updateBirthdayInput() {
+      let year = yearSelect.value;
+      let month = monthSelect.value.padStart(2, '0');
+      let day = daySelect.value.padStart(2, '0');
+
+      if (year && month && day) {
+        hiddenBirthday.value = `${year}-${month}-${day}`;
+      } else {
+        hiddenBirthday.value = '';
+      }
+    }
+
+    yearSelect.addEventListener('change', () => {
+      updateDays();
+      updateBirthdayInput();
+    });
+
+    monthSelect.addEventListener('change', () => {
+      updateDays();
+      updateBirthdayInput();
+    });
+
+    daySelect.addEventListener('change', updateBirthdayInput);
+    yearSelect.addEventListener('change', updateDays);
+    monthSelect.addEventListener('change', updateDays);
+
+    const form = document.getElementById('create_customer_custom');
+    form.addEventListener('submit', async function (event) {
+      let firstName = document.querySelector('input[name="first_name"]');
+      let lastName = document.querySelector('input[name="last_name"]');
+      let email = document.querySelector('input[name="email"]');
+      let password = document.querySelector('input[name="password"]');
+      let gender = document.querySelector('select[name="gender"]').value;
+      let year = document.querySelector('select[name="year"]').value;
+      let month = document.querySelector('select[name="month"]').value;
+      let day = document.querySelector('select[name="day"]').value;
+      const spinner = this.querySelector('.spinner');
+      let error_flg = false;
+
+      const clearErrors = () => {
+        document.querySelectorAll('.wrapper-error').forEach((wrapper) => {
+          wrapper.classList.remove('wrapper-error');
+        });
+        document.querySelectorAll('.error-message').forEach((error) => error.remove());
+      };
+      const addError = (field, message) => {
+        if (field) {
+          error_flg = true;
+          const wrapper = field.closest('.wrapper-input');
+          if (wrapper) {
+            wrapper.classList.add('wrapper-error');
+            let existingError = wrapper.querySelector('.error-message');
+            if (existingError) existingError.remove();
+            let errorElement = document.createElement('div');
+            errorElement.className = 'error-message';
+            errorElement.textContent = message;
+            wrapper.appendChild(errorElement);
+          }
+        }
+      };
+      clearErrors();
+
+      event.preventDefault();
+      const formData = new FormData(form);
+      if (!firstName.value) addError(firstName, 'First name is required');
+      if (!lastName.value) addError(lastName, 'Last name is required');
+      if (!email.value) addError(email, 'Email is required');
+      if (!password.value) addError(password, 'Password is required');
+      if (!gender) addError(document.querySelector('.field_custom_gender'), 'Gender is required');
+      if (!year) addError(document.querySelector('.field_custom_year'), 'Year is required');
+      if (!month) addError(document.querySelector('.field_custom_month'), 'Month is required');
+      if (!day) addError(document.querySelector('.field_custom_day'), 'Day is required');
+
+      document.querySelector('.error-date').style.display = "none";
+      if (hiddenBirthday.value > current_date) {
+        document.querySelector('.error-date').style.display = "block";
+        error_flg = true;
+      }
+
+      formData.forEach((value, key) => {
+        values[key] = value;
+      });
+
+      if (error_flg === false) {
+        spinner.classList.remove('hidden');
+        try {
+          const response = await fetch(apiCustomerCreateUrl, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Shopify-Shop-Domain': shopDomain,
+            },
+            body: JSON.stringify(values),
+          });
+
+          const data = await response.json();
+
+          if (data.errors) {
+            spinner.classList.add('hidden');
+            if (data.errors.email) {
+              const emailWrapper = document.querySelector('.field_custom_email');
+              emailWrapper.classList.add('wrapper-error');
+
+              // Check if an error message already exists
+              let errorElement = emailWrapper.querySelector('.error-message');
+
+              if (!errorElement) {
+                errorElement = document.createElement('div');
+                errorElement.className = 'error-message';
+                emailWrapper.appendChild(errorElement);
+              }
+
+              const emailErrors = Array.isArray(data.errors.email) ? data.errors.email : [data.errors.email];
+              errorElement.textContent = 'Email ' + emailErrors.join(', ');
+            }
+          } else {
+            autoLoginShopify(values.email, values.password);
+          }
+        } catch (error) {
+          console.error('Fetch Error:', error);
+        }
+      }
+    });
+  });
+
+  // Login after create account successful
+  function autoLoginShopify(email, password) {
+    // Create a hidden login form
+    let loginForm = document.createElement('form');
+    loginForm.method = 'POST';
+    loginForm.action = '/account/login';
+    loginForm.style.display = 'none';
+    // Email input
+    let emailInput = document.createElement('input');
+    emailInput.type = 'email';
+    emailInput.name = 'customer[email]';
+    emailInput.value = email;
+    loginForm.appendChild(emailInput);
+    // Password input
+    let passwordInput = document.createElement('input');
+    passwordInput.type = 'password';
+    passwordInput.name = 'customer[password]';
+    passwordInput.value = password;
+    loginForm.appendChild(passwordInput);
+    // Shopify form security hidden inputs
+    let formType = document.createElement('input');
+    formType.type = 'hidden';
+    formType.name = 'form_type';
+    formType.value = 'customer_login';
+    loginForm.appendChild(formType);
+    let utf8 = document.createElement('input');
+    utf8.type = 'hidden';
+    utf8.name = 'utf8';
+    utf8.value = '✓';
+    loginForm.appendChild(utf8);
+    document.body.appendChild(loginForm);
+    loginForm.submit();
+  }
+</script>
+
 {%- style -%}
   .section-{{ section.id }}-padding {
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .customer.register {
+      max-width: 100%!important;
+    }
   }
 
   @media screen and (min-width: 750px) {
@@ -11,6 +215,131 @@
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
+    .customer.register {
+      max-width: 80rem!important;
+    }
+  }
+  .customer .field label {
+    left: 0;
+  }
+  .field_custom::after {
+    display: none!important;
+  }
+  .field_custom label {
+    position:relative!important;
+    flex-basis: 35%;
+    text-align: left;
+  }
+  .field > div {
+    width: 100%!important;
+  }
+  .field > div input {
+    padding: 2rem!important;
+    border: 1px solid #ccc!important;
+  }
+  .field>select {
+    border: 1px solid gray!important;
+  }
+  label.required::after {
+    content: "*";
+    color: red;
+    font-weight: bold;
+    margin-left: 0px;
+  }
+  .cancel-button {
+    background-color: #ccc;
+    border: 1px solid gray!important;
+    color: black;
+    padding: 10px 20px;
+    font-weight: 500;
+    text-decoration: none!important;
+    box-sizing: border-box;
+    text-align: center;
+    min-width: calc(12rem + var(--buttons-border-width)* 2);
+    min-height: calc(4.5rem + var(--buttons-border-width)* 2);
+  }
+  .cancel-button:hover {
+    background-color: #999;
+  }
+  .customer.register #create_customer {
+    display: none;
+  }
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 3px solid white;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  .hidden {
+    display: none;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .date-flex {
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+  }
+  .error-date {
+    display: none;
+    color: red;
+    width: 100%;
+    padding: 1rem;
+  }
+  .date-flex .custom-select {
+    flex-basis: 32%;
+  }
+  .select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  .custom-select {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .custom-select select {
+    width: 100%;
+    padding: 10px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 1px solid #ccc;
+    background-color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .custom-select .dropdown-icon {
+    position: absolute;
+    right: 20px;
+    pointer-events: none;
+    font-size: 14px;
+    top: 2rem;
+    color: #ccc;
+  }
+  .wrapper-error {
+    border: 1px solid #ce2525;
+    border-radius: 5px;
+    background-color: #fdf5f5;
+  }
+  .error-message {
+    color: red!important;
+    text-align: left!important;
+  }
+  .wrapper-input {
+    padding: 1rem;
+    padding-bottom: 0;
+  }
+  .spinner {
+    position: absolute;
+    left: 1rem;
   }
 {%- endstyle -%}
 
@@ -131,6 +460,102 @@
       {{ 'customer.register.submit' | t }}
     </button>
   {%- endform -%}
+
+  <!-- CUSTOM REGISTER CUSTOMER -->
+  <form action="" id="create_customer_custom">
+    <div class="field field_custom">
+      <label for="RegisterForm-FirstName" class="required">
+        {{ 'customer.register.first_name' | t }}
+      </label>
+      <div class="wrapper-input field_custom_first_name">
+        <input type="text" name="first_name">
+      </div>
+    </div>
+
+    <div class="field field_custom">
+      <label for="RegisterForm-LastName" class="required">
+        {{ 'customer.register.last_name' | t }}
+      </label>
+      <div class="wrapper-input field_custom_last_name">
+        <input type="text" name="last_name">
+      </div>
+    </div>
+
+    <div class="field field_custom">
+      <label for="RegisterForm-email" class="required">
+        {{ 'customer.register.email' | t }}
+      </label>
+      <div class="field_custom_email wrapper-input">
+        <input type="email" name="email" id="input-email">
+      </div>
+    </div>
+
+    <div class="field field_custom">
+      <label for="RegisterForm-password" class="required">
+        {{ 'customer.register.password' | t }}
+      </label>
+      <div class="wrapper-input">
+        <input type="password" name="password">
+      </div>
+    </div>
+
+    <div class="field field_custom select-wrapper">
+      <label class="required">
+        {{ 'customer.register.gender' | t }}
+      </label>
+      <div class="field_custom_gender custom-select wrapper-input">
+        <select name="gender" id="gender">
+          <option value="">{{ 'customer.register.choose' | t }}</option>
+          <option value="male">{{ 'customer.register.male' | t }}</option>
+          <option value="female">{{ 'customer.register.female' | t }}</option>
+        </select>
+        <span class="dropdown-icon">▼</span>
+      </div>
+    </div>
+
+    <div class="field field_custom select-wrapper">
+      <label class="required">
+        {{ 'customer.register.birthday' | t }}
+      </label>
+      <div class="date-flex">
+        <!-- Year -->
+        <div class="field_custom_year custom-select wrapper-input">
+          <select name="year" id="birthday-year">
+            <option value="">Year</option>
+          </select>
+          <span class="dropdown-icon">▼</span>
+        </div>
+
+        <!-- Month -->
+        <div class="field_custom_month custom-select wrapper-input">
+          <select name="month" id="birthday-month">
+            <option value="">Month</option>
+          </select>
+          <span class="dropdown-icon">▼</span>
+        </div>
+
+        <!-- Day -->
+        <div class="field_custom_day custom-select wrapper-input">
+          <select name="day" id="birthday-day">
+            <option value="">Day</option>
+          </select>
+          <span class="dropdown-icon">▼</span>
+        </div>
+        <div class="error-date">{{ 'customer.register.choose_date_before' | t }}</div>
+      </div>
+      <input type="hidden" name="birthday" value="">
+    </div>
+
+    <div class="buttons">
+      <a href="/account/login" class="cancel-button">
+        {{ 'customer.login_page.cancel' | t }}
+      </a>
+      <button id="register_account" type="submit">
+        <span class="spinner hidden"></span>
+        <span>{{ 'customer.register.submit' | t }}</span>
+      </button>
+    </div>
+  </form>
 </div>
 
 {% schema %}
