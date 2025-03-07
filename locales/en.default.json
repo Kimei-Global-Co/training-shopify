@@ -385,7 +385,7 @@
   },
   "customer": {
     "account": {
-      "title": "Account",
+      "title": "My account",
       "details": "Account details",
       "view_addresses": "View addresses",
       "return": "Return to Account details"
@@ -501,6 +501,16 @@
       "password": "Password",
       "password_confirm": "Confirm password",
       "submit": "Reset password"
+    },
+    "profile": {
+      "title": "My profile",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "gender": "Gender",
+      "birthday": "Birthday",
+      "password": "Password",
+      "menu": "Menu"
     }
   },
   "gift_cards": {
