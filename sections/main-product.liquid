@@ -197,6 +197,19 @@
                     {{ product.description }}
                   </div>
                 {%- endif -%}
+              {% when 'custom_payment' %}
+                <div class="product__payment">
+                  {% if block.settings.show_payment_icons %}
+                    {% comment %} <p>{{ block.settings.custom_payment_text }}</p> {% endcomment %}
+                    <ul class="list list-payment" style="justify-content: center !important;" role="list">
+                      {%- for type in shop.enabled_payment_types -%}
+                        <li class="list-payment__item">
+                          {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                        </li>
+                      {%- endfor -%}
+                    </ul>
+                  {% endif %}
+                </div>
               {%- when 'sku' -%}
                 <p
                   class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
@@ -2072,6 +2085,24 @@
           "default": "t:sections.main-product.blocks.icon_with_text.settings.heading_3.default",
           "label": "t:sections.main-product.blocks.icon_with_text.settings.heading_3.label",
           "info": "t:sections.main-product.blocks.icon_with_text.settings.heading.info"
+        }
+      ]
+    },
+    {
+      "type": "custom_payment",
+      "name": "Custom Payment",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_payment_icons",
+          "label": "Hiển thị biểu tượng thanh toán",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "custom_payment_text",
+          "label": "Nội dung hiển thị",
+          "default": "Chúng tôi chấp nhận các phương thức thanh toán sau:"
         }
       ]
     }
