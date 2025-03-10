@@ -104,8 +104,8 @@
           </span>
         {%- endunless -%}
         <span class="visually-hidden visually-hidden--inline">{{ 'products.product.price.sale_price' | t }}</span>
-        <span class="price-item price-item--sale price-item--last">
-          {{ money_price }}
+        <span style="color: {{ settings.price_sale_color }}" class="price-item price-item--sale price-item--last">
+          <b>{{ money_price }}</b>
         </span>
       </div>
       <small class="unit-price caption{% if product.selected_or_first_available_variant.unit_price_measurement == nil %} hidden{% endif %}">

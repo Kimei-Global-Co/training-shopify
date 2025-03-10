@@ -1,0 +1,271 @@
+{% comment %}
+  Description:
+  Renders product variant swatch options for collection page based on image URLs.
+  Defaults to buttons if no image URL is present.
+
+  Accepts:
+  - product: {Object} product object.
+  - option: {Object} current product_option object.
+  - variant_images_data: list of variant images
+  - lazy_load_all_variants: lazy load all variant images for immediate availability when clicking swatches
+
+  Usage:
+  {% render 'card-variant-swatch-custom',
+  product: product,
+  option: option,
+  variant_images_data: variant_images_data,
+  lazy_load_all_variants: lazy_load_all_variants
+  %}
+{% endcomment %}
+
+{% assign base_store_files_url = '//YOUR-SHOP-NAME.myshopify.com/cdn/shop/files/' %}
+{% assign product_form_id = 'product-form-' | append: product.id %}
+
+{% liquid
+  assign swatchStyle = settings.CollectionswatchStyle
+  assign swatchSize = settings.CollectionswatchSize
+%}
+
+<variant-selects
+  id="variant-selects-{{ section.id }}"
+  data-section="{{ section.id }}"
+  {{ block.shopify_attributes }}
+>
+  {% for value in option.values %}
+    {% assign variant_image_url = null %}
+    {% assign variant_id = null %}
+    {% assign option_disabled = true %}
+    {% assign first_match_found = false %}
+    {% for variant in product.variants %}
+      {% if first_match_found == false %}
+        {% case option.position %}
+          {% when 1 %}
+            {% if variant.option1 == value %}
+              {% assign variant_image_url = variant.featured_media | img_url: '300x300' %}
+              {% assign variant_id = variant.id %}
+              {% if lazy_load_all_variants %}
+                <!-- Preload image -->
+                <img
+                  src="{{ variant_image_url }}"
+                  alt="{{ variant.title }}"
+                  style="display: none;"
+                  loading="lazy"
+                  data-variant-id="{{ variant.id }}"
+                  width="{{ variant.featured_media.width }}"
+                  height="{{ variant.featured_media.height }}"
+                >
+              {% endif %}
+              {% if variant.available %}
+                {% assign option_disabled = false %}
+              {% endif %}
+              {% assign first_match_found = true %}
+            {% endif %}
+          {% when 2 %}
+            {% if variant.option2 == value and variant.option1 == product.selected_or_first_available_variant.option1 %}
+              {% assign variant_image_url = variant.featured_media | img_url: '300x300' %}
+              {% assign variant_id = variant.id %}
+              {% if lazy_load_all_variants %}
+                <!-- Preload image -->
+                <img
+                  src="{{ variant_image_url }}"
+                  alt="{{ variant.title }}"
+                  style="display: none;"
+                  loading="lazy"
+                  data-variant-id="{{ variant.id }}"
+                  width="{{ variant.featured_media.width }}"
+                  height="{{ variant.featured_media.height }}"
+                >
+              {% endif %}
+              {% if variant.available %}
+                {% assign option_disabled = false %}
+              {% endif %}
+              {% assign first_match_found = true %}
+            {% endif %}
+          {% when 3 %}
+            {% if variant.option3 == value
+              and variant.option1 == product.selected_or_first_available_variant.option1
+              and variant.option2 == product.selected_or_first_available_variant.option2
+            %}
+              {% assign variant_image_url = variant.featured_media | img_url: '300x300' %}
+              {% assign variant_id = variant.id %}
+              {% if lazy_load_all_variants %}
+                <!-- Preload image -->
+                <img
+                  src="{{ variant_image_url }}"
+                  alt="{{ variant.title }}"
+                  style="display: none;"
+                  loading="lazy"
+                  data-variant-id="{{ variant.id }}"
+                  width="{{ variant.featured_media.width }}"
+                  height="{{ variant.featured_media.height }}"
+                >
+              {% endif %}
+              {% if variant.available %}
+                {% assign option_disabled = false %}
+              {% endif %}
+              {% assign first_match_found = true %}
+            {% endif %}
+        {% endcase %}
+      {% endif %}
+      <script type="application/json" data-selected-variant>
+        {{ product.selected_or_first_available_variant | json }}
+      </script>
+      {% if variant_image_url %}
+        {% for item in variant_images_data %}
+          {% if item.variant_value == value %}
+            {% assign variant_filename = item.variant_swatch %}
+            {% unless variant_filename == blank %}
+              {% assign variant_image_url = base_store_files_url | append: variant_filename %}
+            {% endunless %}
+            {% break %}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+
+    <div class="collection-product-card__swatch">
+      <input
+        data-selected-value
+        type="radio"
+        id="collection-{{ section.id }}-{{ product.id }}-{{ option.position }}-{{ forloop.index0 }}"
+        name="collection-{{ section.id }}-{{ product.id }}-{{ option.name }}"
+        value="{{ value | escape }}"
+        form="{{ product_form_id }}"
+        data-section-id="{{ section.id }}"
+        data-product-id="{{ product.id }}"
+        data-variant-id="{{ variant_id }}"
+        data-image-url="{{ variant_image_url }}"
+        data-variant-price="{{ variant.price }}"
+        {% if option.selected_value == value %}
+          checked
+        {% endif %}
+        {% if option_disabled %}
+          class="disabled"
+        {% endif %}
+      >
+      <label
+        class="color-swatch {% case swatchStyle %} {% when "round" %}round{% when "square-round-corners" %}square-round-corners{% endcase %}"
+        style="background:url('{{ variant_image_url }}');"
+        for="collection-{{ section.id }}-{{ product.id }}-{{ option.position }}-{{ forloop.index0 }}"
+      >
+        <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
+      </label>
+    </div>
+  {% endfor %}
+  <script type="application/json" data-selected-variant>
+    {{ product.selected_or_first_available_variant | json }}
+  </script>
+</variant-selects>
+<style>
+    .collection-product-card__swatch {
+      display: inline-block;
+      margin-top: 5px;
+      margin-right: 5px;
+    }
+
+    .collection-product-card__swatch input {
+      display: none;
+    }
+
+    .collection-product-card__swatch label {
+      display: block;
+      width: {{ swatchSize }}px;
+      /* Adjust for desired swatch size */
+      height: {{ swatchSize }}px;
+      /* Adjust for desired swatch size */
+      border: 1px solid #777;
+      border-radius: 50%;
+      /* 50% for circle, 0% for square */
+      background-size: cover !important;
+      cursor: pointer;
+      transition: border-color 0.3s ease;
+    }
+
+
+    /*
+
+     .collection-product-card__swatch label{
+     {% if swatchStyle == "round" %}
+     .collection-product-card__swatch + label.round,
+     .collection-product-card__swatch + label.round:after,
+     .collection-product-card__swatch + label.round:before{
+     border-radius: 100% !important;
+     }
+     {% endif %}
+     {% if swatchStyle == "square" %}
+     .collection-product-card__swatch + label,
+     .collection-product-card__swatch + label:after,
+     .collection-product-card__swatch + label:before{
+     border-radius: 0 !important;
+     }
+     {% endif %}
+     {% if swatchStyle == "round" %}
+     .collection-product-card__swatch + label,
+     .collection-product-card__swatch + label:after,
+     .collection-product-card__swatch + label:before{
+     border-radius: 5px !important;
+     }
+     {% endif %}
+     }
+  */
+
+    .collection-product-card__swatch label:hover {
+      border-color: #333 !important;
+    }
+
+    .collection-product-card__swatch input:checked + label {
+      border-color: #333;
+      border-width: 2px;
+      box-shadow: inset 0 0 0 1px #fff;
+    }
+
+    .collection-product-card__swatch input.disabled + label {
+      opacity: 0.5;
+      position: relative;
+    }
+
+    .collection-product-card__swatch input.disabled + label::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(to bottom right, transparent 45%, rgba(255, 0, 0, 0.6) 50%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .square {
+      border-radius: 100% !important;
+    }
+
+    .square {
+      border-radius: 0 !important;
+    }
+
+    .square-round-corners {
+      border-radius: 5px !important;
+    }
+</style>
+
+<script>
+    var colorSwatch = document.querySelectorAll('label.color-swatch');
+  {% if swatchStyle == "square" %}
+  colorSwatch.forEach(function(label) {
+    // Add the additional class, for example, "new-class"
+    label.classList.add('square');
+  });
+  {% endif %}
+  {% if swatchStyle == "round" %}
+    colorSwatch.forEach(function(label) {
+    // Add the additional class, for example, "new-class"
+    label.classList.add('round');
+  });
+  {% endif %}
+   {% if swatchStyle == "square-round-corners" %}
+    colorSwatch.forEach(function(label) {
+    // Add the additional class, for example, "new-class"
+    label.classList.add('square-round-corners');
+  });
+  {% endif %}
+</script>

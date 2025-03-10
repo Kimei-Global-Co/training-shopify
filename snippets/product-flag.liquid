@@ -1,0 +1,29 @@
+{% if product.tags != blank %}
+  <div class="product-flag-wrapper">
+    {% for var in product.tags %}
+      <div class="product-flag">
+        <span>{{ var | remove: 'flag-' | replace: '-', ' ' }}</span>
+      </div>
+      <br>
+    {% endfor %}
+  </div>
+{% endif %}
+
+<style>
+  .product-flag-wrapper {
+    position: absolute;
+    z-index: 2;
+  }
+  .product-flag {
+    background-color: #f5f5f5;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+
+  .product-flag span {
+    font-size: 12px;
+    font-weight: 700;
+    color: #333;
+  }
+</style>
