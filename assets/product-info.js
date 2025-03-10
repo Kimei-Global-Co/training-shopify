@@ -27,6 +27,63 @@ if (!customElements.get('product-info')) {
 
         this.initQuantityHandlers();
         this.dispatchEvent(new CustomEvent('product-info:loaded', { bubbles: true }));
+
+        this.checkSoldOutOnLoad();
+      }
+
+      // Check if the default variant is sold out when the page loads
+      checkSoldOutOnLoad() {
+        const variantFromJson = this.getSelectedVariantFromJSON();
+        if (!variantFromJson) {
+          const soldOutButton = document.querySelector('[id^="ProductSubmitButton"][disabled]') || null;
+          const buyNowButton = document.querySelector(".shopify-payment-button") || null;
+
+          if (soldOutButton && buyNowButton) {
+            const productId = window?.meta?.product?.id;
+            const objVariant = window?.meta?.product?.variants[0];
+            if (objVariant.length < 0) return;
+
+            const {id: variantId, name: productName, options} = objVariant;
+            // Show form register soldout
+            insertRegisterForm({productId, productName, color: null, size: null, variantId});
+            // Hide button buy it now
+            buyNowButton.style.display = "none";
+          }
+          return;
+        }
+
+        setTimeout(() => {
+          const soldOutButton = document.querySelector('[id^="ProductSubmitButton"][disabled]') || null;
+          const buyNowButton = document.querySelector(".shopify-payment-button") || null;
+
+          if (!soldOutButton) {
+            setTimeout(() => this.checkSoldOutOnLoad(), 500); // Retry after 500ms
+            return;
+          }
+
+          const productId = window?.meta?.product?.id;
+          const { id: variantId, name: productName, options } = variantFromJson;
+          const [ color, size ] = options || {};
+
+          // Show the registration form if product is out of stock
+          insertRegisterForm({productId, productName, color, size, variantId});
+          // Hide button buy it now if product is out of stock
+          if (buyNowButton) buyNowButton.style.display = "none";
+
+        }, 500); // Delay ensures Shopify finishes loading
+      }
+
+      getSelectedVariantFromJSON() {
+        const productScript = document.querySelector('script[type="application/json"][data-selected-variant]');
+        if (!productScript) {
+            return null;
+        }
+
+        try {
+            return JSON.parse(productScript?.textContent);
+        } catch (error) {
+            return null;
+        }
       }
 
       addPreProcessCallback(callback) {
@@ -200,6 +257,31 @@ if (!customElements.get('product-info')) {
             html.getElementById(`ProductSubmitButton-${this.sectionId}`)?.hasAttribute('disabled') ?? true,
             window.variantStrings.soldOut
           );
+
+          // Handle from event change color or size check to load sold out form
+          const buyNowButton = this.querySelector(".shopify-payment-button") || null;
+          if (!variant.available) {
+              const productId = window?.meta?.product?.id;
+              const productName = variant?.name;
+              const [ color, size ] = variant?.options;
+              const variantId = variant?.id;
+
+              // Show the registration form if product is out of stock
+              insertRegisterForm({
+                productId,
+                productName,
+                color,
+                size,
+                variantId
+              });
+              // Hide the Buy button if product is out of stock
+              if (buyNowButton) buyNowButton.style.display = "none";
+          } else {
+              // Hide registration form if product is in stock
+              hideRegisterForm();
+              // Show Buy button if in stock
+              if (buyNowButton) buyNowButton.style.display = "block";
+          }
 
           publish(PUB_SUB_EVENTS.variantChange, {
             data: {
@@ -413,4 +495,56 @@ if (!customElements.get('product-info')) {
       }
     }
   );
+
+  function insertRegisterForm(registerData) {
+    const productRegisterForm = document.getElementById("product-register-form");
+    if (!productRegisterForm) return;
+
+    const { productId, productName, color, size, variantId } = registerData || {};
+
+    // Clear any previous content before inserting the new form
+    productRegisterForm.innerHTML = "";
+
+    // Create the registration form
+    const fieldDiv = document.createElement("div");
+    fieldDiv.classList.add("field");
+    fieldDiv.innerHTML = `
+        <input id="register-email" type="email" name="register-soldout[email]" class="field__input" placeholder="Email" required>
+        <label class="field__label" for="register-email">Register Product by email</label>
+
+        <div class="RegisterSoldOutProductForm-form__button field__button" role="button" tabindex="0"
+            aria-label="Register Product" onclick="registerProduct('${productId}', '${productName}', '${color}', '${size}', '${variantId}')">
+            <span class="svg-wrapper">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon icon-arrow" viewBox="0 0 14 10">
+                    <path fill="currentColor" fill-rule="evenodd"
+                        d="M8.537.808a.5.5 0 0 1 .817-.162l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 1 1-.708-.708L11.793 5.5H1a.5.5 0 0 1 0-1h10.793L8.646 1.354a.5.5 0 0 1-.109-.546"
+                        clip-rule="evenodd"></path>
+                </svg>
+            </span>
+            <span class="register_form-soldout">
+                <span class="loading__spinner hidden"></span>
+            </span>
+        </div>
+    `;
+
+    // Add the form inside the designated container
+    productRegisterForm.appendChild(fieldDiv);
+    // Add the p element for alert error
+    fieldDiv?.insertAdjacentHTML("afterend", `
+      <p class="error-message" style="color: red; font-size: 14px; display: none; margin-top: 5px;">
+          Please enter a valid email.
+      </p>
+  `);
+
+    // Make the form visible
+    productRegisterForm.style.display = "block";
+  }
+
+  // Hide the form when the product is back in stock
+  function hideRegisterForm() {
+      const productRegisterForm = document.getElementById("product-register-form") || null;
+      if (productRegisterForm) {
+          productRegisterForm.style.display = "none";
+      }
+  }
 }

@@ -54,6 +54,13 @@
           "settings": {
             "share_label": "Share"
           }
+        },
+        "custom_payment": {
+          "type": "custom_payment",
+          "settings": {
+            "show_payment_icons": true,
+            "custom_payment_text": "Chấp nhận các phương thức thanh toán sau:"
+          }
         }
       },
       "block_order": [
@@ -63,6 +70,7 @@
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
+        "custom_payment",
         "description",
         "share"
       ],

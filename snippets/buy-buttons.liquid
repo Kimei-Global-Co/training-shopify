@@ -93,9 +93,10 @@
             </span>
             {%- render 'loading-spinner' -%}
           </button>
-          {%- if show_dynamic_checkout -%}
-            {{ form | payment_button }}
-          {%- endif -%}
+            {%- render 'register-out-of-stock-product', product: product -%}
+            {%- if show_dynamic_checkout -%}
+              {{ form | payment_button }}
+            {%- endif -%}
         </div>
       {%- endform -%}
     </product-form>
@@ -148,4 +149,6 @@
 
     <script src="{{ 'pickup-availability.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
+
+  <script src="{{ 'register-out-of-stock-handler.js' | asset_url }}" defer="defer"></script>
 </div>
