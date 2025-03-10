@@ -6,6 +6,21 @@
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
 
+  @media screen and (max-width: 749px) {
+    .line-between {
+      display: block!important;
+      height: 1px;
+      background-color: rgb(var(--color-foreground), 0.5);
+    }
+    .create-account {
+      border: 1px solid black!important;
+      padding: 1rem 2rem;
+      color: white!important;
+      text-decoration: none!important;
+      background-color: rgba(var(--color-button), var(--alpha-button-background))!important;
+    }
+  }
+
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
@@ -28,7 +43,7 @@
     .line-between {
       display: block!important;
       width: 1px;
-      background-color: rgb(var(--color-foreground), 0.5);;
+      background-color: rgb(var(--color-foreground), 0.5);
     }
     .create-account {
       background-color: black!important;

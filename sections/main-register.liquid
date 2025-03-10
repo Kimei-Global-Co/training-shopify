@@ -208,6 +208,13 @@
     .customer.register {
       max-width: 100%!important;
     }
+    .wrapper-input {
+      padding: 0.25rem;
+    }
+    .custom-select .dropdown-icon {
+      right: 0.5rem;
+      top: 1.5rem;
+    }
   }
 
   @media screen and (min-width: 750px) {
@@ -218,6 +225,17 @@
     .customer.register {
       max-width: 80rem!important;
     }
+    .wrapper-input {
+      padding: 1rem;
+    }
+    .custom-select .dropdown-icon {
+    right: 0.5rem;
+    top: 1.5rem;
+  }
+  .custom-select .dropdown-icon {
+    right: 20px;
+    top: 2rem;
+  }
   }
   .customer .field label {
     left: 0;
@@ -318,10 +336,8 @@
   }
   .custom-select .dropdown-icon {
     position: absolute;
-    right: 20px;
     pointer-events: none;
     font-size: 14px;
-    top: 2rem;
     color: #ccc;
   }
   .wrapper-error {
@@ -332,10 +348,6 @@
   .error-message {
     color: red!important;
     text-align: left!important;
-  }
-  .wrapper-input {
-    padding: 1rem;
-    padding-bottom: 0;
   }
   .spinner {
     position: absolute;
