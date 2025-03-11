@@ -399,8 +399,13 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+
     {% if template == 'product' %}
       <script src="{{ 'register-out-of-stock-handler.js' | asset_url }}" defer="defer"></script>
+    {% endif %}
+
+    {% if settings.domain_generate_api %}
+      <script src="{{ 'config-server.js' | asset_url }}" defer="defer"></script>
     {% endif %}
   </body>
 </html>

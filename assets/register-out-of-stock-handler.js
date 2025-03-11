@@ -24,7 +24,7 @@
         // Error alert
         errorMessage.style.display = "none";
 
-        fetch(`http://localhost:8005/api/products/${productId}/notify`, {
+        fetch(`${config?.server?.baseURL}/api/products/${productId}/notify`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

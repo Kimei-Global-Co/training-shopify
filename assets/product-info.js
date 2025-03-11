@@ -79,8 +79,22 @@ if (!customElements.get('product-info')) {
             return null;
         }
 
+        // Get the value of the 'variant' parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const variantIdFromUrl = urlParams?.get('variant') || null;
+
         try {
-            return JSON.parse(productScript?.textContent);
+            const variantFromJson = JSON.parse(productScript?.textContent);
+            // Url has no variant id
+            if (!variantIdFromUrl) {
+              return variantFromJson;
+            }
+            // Url has variant id and it matches the variant from JSON
+            if (variantFromJson && variantIdFromUrl === variantFromJson?.id) {
+              return variantFromJson;
+            }
+
+            return null;
         } catch (error) {
             return null;
         }
@@ -261,6 +275,7 @@ if (!customElements.get('product-info')) {
           // Handle from event change color or size check to load sold out form
           const buyNowButton = this.querySelector(".shopify-payment-button") || null;
           if (!variant.available) {
+        console.log('object is 2222222222222222222')
               const productId = window?.meta?.product?.id;
               const productName = variant?.name;
               const [ color, size ] = variant?.options;
