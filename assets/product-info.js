@@ -275,7 +275,6 @@ if (!customElements.get('product-info')) {
           // Handle from event change color or size check to load sold out form
           const buyNowButton = this.querySelector(".shopify-payment-button") || null;
           if (!variant.available) {
-        console.log('object is 2222222222222222222')
               const productId = window?.meta?.product?.id;
               const productName = variant?.name;
               const [ color, size ] = variant?.options;
