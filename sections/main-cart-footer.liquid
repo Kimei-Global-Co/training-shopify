@@ -104,6 +104,11 @@
                 </small>
               </div>
             {%- else -%}
+              {%- if section.settings.text_note -%}
+                <div class="cart__ctas" {{ block.shopify_attributes }}>
+                  <p style="color: {{ section.settings.text_note_color }};">{{ section.settings.text_note }}</p>
+                </div>
+              {%- endif -%}
               <div class="cart__ctas" {{ block.shopify_attributes }}>
                 <button
                   type="submit"
@@ -118,7 +123,19 @@
                   {{ 'sections.cart.checkout' | t }}
                 </button>
               </div>
-
+              <div class="cart__ctas" {{ block.shopify_attributes }}>
+                <a
+                  style="width: 100%;"
+                  href="{{ routes.all_products_collection_url }}"
+                  class="button button--link"
+                  {% if cart == empty %}
+                    disabled
+                  {% endif %}
+                  form="cart"
+                >
+                {{- 'general.continue_shopping' | t -}}
+                </a>
+              </div>
               {%- if additional_checkout_buttons -%}
                 <div class="cart__dynamic-checkout-buttons additional-checkout-buttons">
                   {{ content_for_additional_checkout_buttons }}
@@ -126,7 +143,17 @@
               {%- endif -%}
           {%- endcase -%}
         {% endfor %}
-
+        {%- if section.settings.payment_enable -%}
+          <div class="cart__ctas" {{ block.shopify_attributes }}>
+            <ul class="list list-payment" role="list" style="width: 100%; justify-content: center;">
+              {%- for type in shop.enabled_payment_types -%}
+                <li class="list-payment__item">
+                  {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
         <div id="cart-errors"></div>
       </div>
     </div>
@@ -163,6 +190,23 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 40
+    },
+    {
+      "type": "checkbox",
+      "id": "payment_enable",
+      "default": true,
+      "label": "t:sections.footer.settings.payment_enable.label"
+    },
+    {
+      "type": "textarea",
+      "id": "text_note",
+      "label": "Text note cart"
+    },
+    {
+      "type": "color",
+      "id": "text_note_color",
+      "label": "Text note color cart",
+      "default": "#FF0000"
     }
   ],
   "blocks": [
