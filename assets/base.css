@@ -3595,3 +3595,14 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+.button--link {
+  background: none;
+  border-color: #999;
+  color: #1f1f1f;
+}
+
+.quantity__select {
+  padding: 9px 30px 9px 15px;
+  border: 1px solid #e2e2e2;
+}

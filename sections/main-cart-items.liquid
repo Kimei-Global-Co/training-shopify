@@ -27,11 +27,11 @@
 
 <cart-items class="gradient color-{{ section.settings.color_scheme }} isolate{% if cart == empty %} is-empty{% else %} section-{{ section.id }}-padding{% endif %}">
   <div class="page-width">
-    <div class="title-wrapper-with-link">
+    <div class="title-wrapper-with-link" style="justify-content: center;">
       <h1 class="title title--primary">{{ 'sections.cart.title' | t }}</h1>
-      <a href="{{ routes.all_products_collection_url }}" class="underlined-link">
+      {% comment %} <a href="{{ routes.all_products_collection_url }}" class="underlined-link">
         {{- 'general.continue_shopping' | t -}}
-      </a>
+      </a> {% endcomment %}
     </div>
 
     <div class="cart__warnings">
@@ -240,7 +240,36 @@
                                 {{- 'icon-info.svg' | inline_asset_content -}}
                               </button>
                             {%- endif -%}
-                            <quantity-input class="quantity cart-quantity">
+                            <select
+                                class="quantity__select"
+                                data-quantity-variant-id="{{ item.variant.id }}"
+                                type="number"
+                                name="updates[]"
+                                value="{{ item.quantity }}"
+                                {% # theme-check-disable %}
+                                data-cart-quantity="{{ cart | item_count_for_variant: item.variant.id }}"
+                                min="0"
+                                data-min="{{ item.variant.quantity_rule.min }}"
+                                {% if item.variant.quantity_rule.max != null %}
+                                  max="{{ item.variant.quantity_rule.max }}"
+                                {% endif %}
+                                step="{{ item.variant.quantity_rule.increment }}"
+                                {% # theme-check-enable %}
+                                aria-label="{{ 'products.product.quantity.input_label' | t: product: item.product.title | escape }}"
+                                id="Quantity-{{ item.index | plus: 1 }}"
+                                data-index="{{ item.index | plus: 1 }}"
+                            >
+                              {%- liquid
+                               assign inventory_quantity = item.variant.inventory_quantity
+                                if inventory_quantity > 3
+                                  assign inventory_quantity = 3
+                                endif
+                              -%}
+                              {%- for i in (1..inventory_quantity) -%}
+                                <option value="{{ i }}" {% if item.quantity == i %}selected{% endif %}>{{ i }}</option>
+                              {%- endfor -%}
+                            </select>
+                            {% comment %} <quantity-input class="quantity cart-quantity">
                               <button class="quantity__button" name="minus" type="button">
                                 <span class="visually-hidden">
                                   {{- 'products.product.quantity.decrease' | t: product: item.product.title | escape -}}
@@ -276,7 +305,7 @@
                                   {{- 'icon-plus.svg' | inline_asset_content -}}
                                 </span>
                               </button>
-                            </quantity-input>
+                            </quantity-input> {% endcomment %}
                           </div>
                           <cart-remove-button
                             id="Remove-{{ item.index | plus: 1 }}"
@@ -287,9 +316,7 @@
                               class="button button--tertiary"
                               aria-label="{{ 'sections.cart.remove_title' | t: title: item.title | escape }}"
                             >
-                              <span class="svg-wrapper">
-                                {{- 'icon-remove.svg' | inline_asset_content -}}
-                              </span>
+                            {{ 'sections.cart.remove_title' | t: title: '' }} 
                             </a>
                           </cart-remove-button>
                         </div>
