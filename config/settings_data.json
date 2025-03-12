@@ -157,6 +157,23 @@
         "type": "shopify://apps/klip-coupons/blocks/klip-app/df38e221-ede4-4ad4-b47d-56524361a5be",
         "disabled": false,
         "settings": {}
+      },
+      "15014643352720781508": {
+        "type": "shopify://apps/wrapped/blocks/app-embed/1714fc7d-e525-4a14-8c3e-1b6ed95734c5",
+        "disabled": false,
+        "settings": {
+          "extension_background_primary_color": "#ffffff",
+          "extension_background_secondary_color": "#f3f3f3",
+          "extension_border_color": "#000000",
+          "checkbox_radio_color": "rgba(0,0,0,0)",
+          "font_color": "#000000",
+          "font_scale": 100,
+          "background_color": "#ffffff",
+          "border_color": "#000000",
+          "border_radius": 6,
+          "gift_thumbnail_position": "--wrapped-thumbnail-position-start",
+          "gift_thumbnail_size": 75
+        }
       }
     },
     "color_schemes": {
