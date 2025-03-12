@@ -145,7 +145,7 @@
       >
       <label
         class="color-swatch {% case swatchStyle %} {% when "round" %}round{% when "square-round-corners" %}square-round-corners{% endcase %}"
-        style="background:url('{{ variant_image_url }}');"
+        style="background: {{ value | escape }};"
         for="collection-{{ section.id }}-{{ product.id }}-{{ option.position }}-{{ forloop.index0 }}"
       >
         <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
