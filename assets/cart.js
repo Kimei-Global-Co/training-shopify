@@ -235,15 +235,10 @@ class CartItems extends HTMLElement {
       } else {
         notificationPrdSaleCart.style.display = "none";
         checkoutButton.forEach(item => {
-          item.removeAttribute('disabled');
           item.removeEventListener('click', preventCheckout);
+          item.removeAttribute('disabled');
         });
       }
-    }
-
-    function preventCheckout(event) {
-      event.preventDefault();
-      alert("You can only purchase 1 item on sale at a time.");
     }
 
     cartItems.forEach((item, index) => {
@@ -328,24 +323,36 @@ document.addEventListener("DOMContentLoaded", function () {
     let cartItems = document.querySelectorAll(".cart-item");
     let notificationPrdSaleCart = document.querySelector("#notification-prd-sale-cart");
     let saleCount = 0;
+
+    // Hàm cập nhật trạng thái của checkout button
+    function updateCheckoutState() {
+      checkoutButton.forEach(item => {
+          if (saleCount >= 2) {
+              item.setAttribute('disabled', true);
+              item.addEventListener('click', preventCheckout); // Đảm bảo rằng bạn sử dụng hàm có tên
+              notificationPrdSaleCart.style.display = "block";
+          } else {
+              item.removeAttribute('disabled');
+              item.removeEventListener('click', preventCheckout); // Xóa sự kiện đã đăng ký
+              notificationPrdSaleCart.style.display = "none";
+          }
+      });
+    }
+
+    // Tính số lượng sản phẩm giảm giá
     cartItems.forEach(item => {
-      let comparePrice = item.getAttribute("data-compare-price");
-      let price = item.getAttribute("data-price");
-  
-      if (comparePrice && comparePrice > price) {
-        saleCount++;
-      }
+        let comparePrice = parseFloat(item.getAttribute("data-compare-price"));
+        let price = parseFloat(item.getAttribute("data-price"));
+        if (comparePrice && comparePrice > price) {
+            saleCount++;
+        }
     });
-  
-    checkoutButton.forEach(item => {
-        item.removeAttribute('disabled');
-        if (saleCount >= 2) {
-          item.addEventListener('click', (event) => {
-            event.preventDefault();
-            alert("You can only purchase 1 item on sale at a time.");
-          });
-          notificationPrdSaleCart.style.display = "block"
-          item.setAttribute('disabled', true);
-      }
-    });
+
+    // Cập nhật trạng thái checkout button sau khi tính toán số lượng sản phẩm giảm giá
+    updateCheckoutState();
 });
+
+function preventCheckout(event) {
+  event.preventDefault();
+  alert("You can only purchase 1 item on sale at a time.");
+}
