@@ -47,7 +47,7 @@
         </p>
       {%- endif -%}
     </div>
-
+    <h2 id="notification-prd-sale-cart" style="display:none;color: #FF0000">{{ 'sections.cart.notification_prd_sale_cart' | t }}</h2>
     <form action="{{ routes.cart_url }}" class="cart__contents critical-hidden" method="post" id="cart">
       <div class="cart__items" id="main-cart-items" data-id="{{ section.id }}">
         <div class="js-contents">
@@ -79,7 +79,7 @@
 
               <tbody>
                 {%- for item in cart.items -%}
-                  <tr class="cart-item" id="CartItem-{{ item.index | plus: 1 }}">
+                  <tr class="cart-item" id="CartItem-{{ item.index | plus: 1 }}" data-compare-price="{{ item.variant.compare_at_price }}" data-price="{{ item.variant.price }}">
                     <td class="cart-item__media">
                       {% if item.image %}
                         {% comment %} Leave empty space due to a:empty CSS display: none rule {% endcomment %}

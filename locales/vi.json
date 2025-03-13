@@ -274,6 +274,7 @@
       }
     },
     "cart": {
+      "notification_prd_sale_cart": "Bạn chỉ có thể mua 1 sản phẩm giảm giá!!!!",
       "title": "Giỏ hàng của bạn",
       "caption": "Các mặt hàng trong giỏ hàng",
       "remove_title": "Xóa {{ title }}",

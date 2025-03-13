@@ -282,6 +282,7 @@
       }
     },
     "cart": {
+      "notification_prd_sale_cart": "You can only purchase 1 item on sale at a time!!!",
       "title": "Your cart",
       "caption": "Cart items",
       "remove_title": "Remove {{ title }}",

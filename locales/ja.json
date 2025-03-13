@@ -274,6 +274,7 @@
       }
     },
     "cart": {
+      "notification_prd_sale_cart": "「割引商品は1つだけ購入できます！！！」",
       "title": "あなたのカート",
       "caption": "カートアイテム",
       "remove_title": "{{ title }}を削除する",

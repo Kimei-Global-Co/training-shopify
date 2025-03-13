@@ -208,6 +208,7 @@ class CartItems extends HTMLElement {
         }
 
         publish(PUB_SUB_EVENTS.cartUpdate, { source: 'cart-items', cartData: parsedState, variantId: variantId });
+        this.checkNotifyPrdSaleCart();
       })
       .catch(() => {
         this.querySelectorAll('.loading__spinner').forEach((overlay) => overlay.classList.add('hidden'));
@@ -219,6 +220,42 @@ class CartItems extends HTMLElement {
       });
   }
 
+  checkNotifyPrdSaleCart() {
+    let checkoutButton = document.querySelectorAll("[name='checkout']");
+    let cartItems = document.querySelectorAll(".cart-item");
+    let notificationPrdSaleCart = document.querySelector("#notification-prd-sale-cart");
+    let saleCount = 0;
+    function updateCheckoutState() {
+      if (saleCount >= 2) {
+        notificationPrdSaleCart.style.display = "block";
+        checkoutButton.forEach(item => {
+          item.setAttribute('disabled', true);
+          item.addEventListener('click', preventCheckout);
+        });
+      } else {
+        notificationPrdSaleCart.style.display = "none";
+        checkoutButton.forEach(item => {
+          item.removeAttribute('disabled');
+          item.removeEventListener('click', preventCheckout);
+        });
+      }
+    }
+
+    function preventCheckout(event) {
+      event.preventDefault();
+      alert("You can only purchase 1 item on sale at a time.");
+    }
+
+    cartItems.forEach((item, index) => {
+      let comparePrice = parseFloat(item.getAttribute("data-compare-price"));
+      let price = parseFloat(item.getAttribute("data-price"));
+      if (comparePrice && comparePrice > price) {
+        saleCount++;
+      }
+    });
+
+    updateCheckoutState();
+  }
   updateLiveRegions(line, message) {
     const lineItemError =
       document.getElementById(`Line-item-error-${line}`) || document.getElementById(`CartDrawer-LineItemError-${line}`);
@@ -284,3 +321,31 @@ if (!customElements.get('cart-note')) {
     }
   );
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    let checkoutButton = document.querySelectorAll("[name='checkout']");
+    let cartItems = document.querySelectorAll(".cart-item");
+    let notificationPrdSaleCart = document.querySelector("#notification-prd-sale-cart");
+    let saleCount = 0;
+    cartItems.forEach(item => {
+      let comparePrice = item.getAttribute("data-compare-price");
+      let price = item.getAttribute("data-price");
+  
+      if (comparePrice && comparePrice > price) {
+        saleCount++;
+      }
+    });
+  
+    checkoutButton.forEach(item => {
+        item.removeAttribute('disabled');
+        if (saleCount >= 2) {
+          item.addEventListener('click', (event) => {
+            event.preventDefault();
+            alert("You can only purchase 1 item on sale at a time.");
+          });
+          notificationPrdSaleCart.style.display = "block"
+          item.setAttribute('disabled', true);
+      }
+    });
+});
