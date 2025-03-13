@@ -1,5 +1,8 @@
 {
   "general": {
+    "year": "年",
+    "month": "月",
+    "day": "日",
     "password_page": {
       "login_form_heading": "パスワードを入力してストアにアクセスする。",
       "login_password_button": "パスワードを入力してアクセスする",
@@ -406,7 +409,15 @@
       "first_name": "名",
       "last_name": "姓",
       "company": "会社",
-      "address1": "住所1",
+      "address1": "それ以降の住所",
+      "first_name_required": "名は必須です",
+      "last_name_required": "姓は必須です",
+      "zip_required": "郵便番号は必須です",
+      "city_required": "市区町村は必須です",
+      "province_required": "都道府県は必須です",
+      "address1_required": "それ以降の住所は必須です",
+      "address2_required": "建物名、部屋番号などは必須です",
+      "phone_required": "電話番号は必須です",
       "address2": "建物名、部屋番号など",
       "city": "市",
       "country": "国/地域",
@@ -419,20 +430,26 @@
       "cancel": "キャンセルする",
       "edit": "編集",
       "delete": "削除",
-      "delete_confirm": "この住所を削除してもよろしいですか?"
+      "delete_confirm": "この住所を削除してもよろしいですか?",
+      "zip_not_found": "有効な郵便番号を入力してください。",
+      "reset": "データを消去",
+      "error_create": "新しい住所の追加エラー",
+      "delete_success": "住所が正常に削除されました",
+      "delete_error": "住所の削除に失敗しました"
     },
     "log_in": "ログイン",
     "log_out": "ログアウト",
     "login_page": {
       "cancel": "キャンセル",
-      "create_account": "アカウントを作成する",
+      "create_account": "新規会員登録",
+      "create_account_subtext": "当サービスを初めてご利用の方、または初めてご購入の方は、新規会員登録を行ってください。",
       "email": "メール",
-      "forgot_password": "パスワードをお忘れですか?",
-      "guest_continue": "続行",
-      "guest_title": "ゲストとして続行する",
+      "forgot_password": "パスワードをお忘れですか？",
+      "guest_continue": "続ける",
+      "guest_title": "ゲストとして続ける",
       "password": "パスワード",
       "title": "ログイン",
-      "sign_in": "ログイン",
+      "sign_in": "サインイン",
       "submit": "送信",
       "alternate_provider_separator": "または"
     },
@@ -452,12 +469,28 @@
       "success": "パスワードを更新するためのリンクが記載されたメールを送信しました。"
     },
     "register": {
-      "title": "アカウントを作成する",
+      "title": "新規会員",
       "first_name": "名",
       "last_name": "姓",
       "email": "メール",
       "password": "パスワード",
-      "submit": "作成する"
+      "submit": "作成",
+      "male": "男性",
+      "female": "女性",
+      "select_gender": "性別を選択",
+      "birthday": "誕生日",
+      "cancel": "キャンセル",
+      "gender": "性別",
+      "choose": "選択",
+      "choose_date_before": "今日より前の日付を選択してください！",
+      "first_name_required": "名は必須です",
+      "last_name_required": "姓は必須です",
+      "email_required": "メールアドレスは必須です",
+      "password_required": "パスワードは必須です",
+      "gender_required": "性別は必須です",
+      "year_required": "年は必須です",
+      "month_required": "月は必須です",
+      "day_required": "日は必須です"
     },
     "reset_password": {
       "title": "アカウントのパスワードをリセットする",
@@ -491,6 +524,16 @@
       "subtotal": "小計",
       "total_duties": "関税",
       "total_refunded": "返金済"
+    },
+    "profile": {
+      "title": "マイプロフィール",
+      "first_name": "名",
+      "last_name": "姓",
+      "email": "メール",
+      "gender": "性別",
+      "birthday": "誕生日",
+      "password": "パスワード",
+      "menu": "メニュー"
     }
   },
   "gift_cards": {
