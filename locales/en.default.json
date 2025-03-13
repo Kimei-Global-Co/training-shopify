@@ -1,5 +1,8 @@
 {
   "general": {
+    "year": "Year",
+    "month": "Month",
+    "day": "Day",
     "password_page": {
       "login_form_heading": "Enter store using password:",
       "login_password_button": "Enter using password",
@@ -421,7 +424,20 @@
       "cancel": "Cancel",
       "edit": "Edit",
       "delete": "Delete",
-      "delete_confirm": "Are you sure you wish to delete this address?"
+      "delete_confirm": "Are you sure you wish to delete this address?",
+      "zip_not_found": "Please enter a valid zip code.",
+      "reset": "Clear data",
+      "first_name_required": "First name is required",
+      "last_name_required": "Last name is required",
+      "zip_required": "Zip code is required",
+      "city_required": "City is required",
+      "province_required": "Province is required",
+      "address1_required": "Address 1 is required",
+      "address2_required": "Address 2 is required",
+      "phone_required": "Phone number is required",
+      "error_create": "Error adding new address",
+      "delete_success": "Address deleted successfully",
+      "delete_error": "Address deletion failed"
     },
     "log_in": "Log in",
     "log_out": "Log out",
@@ -494,7 +510,15 @@
       "cancel": "Cancel",
       "gender": "Gender",
       "choose": "Choose",
-      "choose_date_before": "Please choose a date before today!"
+      "choose_date_before": "Please choose a date before today!",
+      "first_name_required": "First name is required",
+      "last_name_required": "Last name is required",
+      "email_required": "Email is required",
+      "password_required": "Password is required",
+      "gender_required": "Gender is required",
+      "year_required": "Year is required",
+      "month_required": "Month is required",
+      "day_required": "Day is required"
     },
     "reset_password": {
       "title": "Reset account password",

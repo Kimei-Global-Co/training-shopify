@@ -26,7 +26,7 @@
     }
 
     function updateDays() {
-      daySelect.innerHTML = '<option value="">Day</option>'; // Reset first
+      daySelect.innerHTML = '<option value="">' + "{{ 'general.day' | t }}" + '</option>'; // Reset first
       const year = parseInt(yearSelect.value);
       const month = parseInt(monthSelect.value);
       if (!year || !month) return;
@@ -102,14 +102,14 @@
 
       event.preventDefault();
       const formData = new FormData(form);
-      if (!firstName.value) addError(firstName, 'First name is required');
-      if (!lastName.value) addError(lastName, 'Last name is required');
-      if (!email.value) addError(email, 'Email is required');
-      if (!password.value) addError(password, 'Password is required');
-      if (!gender) addError(document.querySelector('.field_custom_gender'), 'Gender is required');
-      if (!year) addError(document.querySelector('.field_custom_year'), 'Year is required');
-      if (!month) addError(document.querySelector('.field_custom_month'), 'Month is required');
-      if (!day) addError(document.querySelector('.field_custom_day'), 'Day is required');
+      if (!firstName.value) addError(firstName, "{{ 'customer.register.first_name_required' | t }}");
+      if (!lastName.value) addError(lastName, "{{ 'customer.register.last_name_required' | t }}");
+      if (!email.value) addError(email, "{{ 'customer.register.email_required' | t }}");
+      if (!password.value) addError(password, "{{ 'customer.register.password_required' | t }}");
+      if (!gender) addError(document.querySelector('.field_custom_gender'), "{{ 'customer.register.gender_required' | t }}");
+      if (!year) addError(document.querySelector('.field_custom_year'), "{{ 'customer.register.year_required' | t }}");
+      if (!month) addError(document.querySelector('.field_custom_month'), "{{ 'customer.register.month_required' | t }}");
+      if (!day) addError(document.querySelector('.field_custom_day'), "{{ 'customer.register.day_required' | t }}");
 
       document.querySelector('.error-date').style.display = "none";
       if (hiddenBirthday.value > current_date) {
@@ -229,13 +229,13 @@
       padding: 1rem;
     }
     .custom-select .dropdown-icon {
-    right: 0.5rem;
-    top: 1.5rem;
-  }
-  .custom-select .dropdown-icon {
-    right: 20px;
-    top: 2rem;
-  }
+      right: 0.5rem;
+      top: 1.5rem;
+    }
+    .custom-select .dropdown-icon {
+      right: 20px;
+      top: 2rem;
+    }
   }
   .customer .field label {
     left: 0;
@@ -533,7 +533,7 @@
         <!-- Year -->
         <div class="field_custom_year custom-select wrapper-input">
           <select name="year" id="birthday-year">
-            <option value="">Year</option>
+            <option value="">{{ 'general.year' | t }}</option>
           </select>
           <span class="dropdown-icon">▼</span>
         </div>
@@ -541,7 +541,7 @@
         <!-- Month -->
         <div class="field_custom_month custom-select wrapper-input">
           <select name="month" id="birthday-month">
-            <option value="">Month</option>
+            <option value="">{{ 'general.month' | t }}</option>
           </select>
           <span class="dropdown-icon">▼</span>
         </div>
@@ -549,7 +549,7 @@
         <!-- Day -->
         <div class="field_custom_day custom-select wrapper-input">
           <select name="day" id="birthday-day">
-            <option value="">Day</option>
+            <option value="">{{ 'general.day' | t }}</option>
           </select>
           <span class="dropdown-icon">▼</span>
         </div>
