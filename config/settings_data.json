@@ -170,8 +170,18 @@
           "gift_thumbnail_size": 75
         }
       },
-      "14868561720390754469": {
-        "type": "shopify://apps/loloyal-com/blocks/boom-cend/930ac91f-2bf2-4655-9ba0-574771f782d6",
+      "16053653756511055521": {
+        "type": "shopify://apps/casa-loyalty/blocks/casa_app_embed/da24958b-9ea9-44ae-b810-fe9dddbf4430",
+        "disabled": false,
+        "settings": {}
+      },
+      "5515788360651110344": {
+        "type": "shopify://apps/casa-loyalty/blocks/casa_landing_page/da24958b-9ea9-44ae-b810-fe9dddbf4430",
+        "disabled": false,
+        "settings": {}
+      },
+      "14950026111393621546": {
+        "type": "shopify://apps/casa-loyalty/blocks/casa_app_sdk/da24958b-9ea9-44ae-b810-fe9dddbf4430",
         "disabled": false,
         "settings": {}
       }
