@@ -197,25 +197,6 @@ async function handleWishlist(button) {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// WISHLIST DETAIL
-
 // Update the wishlist button value
 function updateWishlistButtonPDP() {
     const wishlistButton = document.querySelector('.wishlist-button');
