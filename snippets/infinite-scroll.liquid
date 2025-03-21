@@ -245,7 +245,7 @@
         fetchNextPage(e) {
             if (e <= this.dataset.pageSize) {
                 let newVariantDataMap = {};
-                const t = `{{ shop.url }}/${this.dataset.next}`;
+                const t = `{{ shop.url }}${this.dataset.next}`;
                 const i = new URL(t);
                 i.searchParams.set("page", e);
                 const r = i.href;
@@ -275,6 +275,7 @@
                         window.variantDataMap = { ...window.variantDataMap, ...newVariantDataMap }
                         const i = t.querySelector(this.gridName).innerHTML;
                         this.gridContainer.insertAdjacentHTML("beforeend", i);
+                        updateWishlistButtons();
                     })
                     .catch((e) => {
                         console.error("Error:", e);

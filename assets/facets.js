@@ -68,6 +68,7 @@ class FacetFiltersForm extends HTMLElement {
         FacetFiltersForm.renderProductGridContainer(html);
         FacetFiltersForm.renderProductCount(html);
         if (typeof initializeScrollAnimationTrigger === 'function') initializeScrollAnimationTrigger(html.innerHTML);
+        document.dispatchEvent(new CustomEvent("facetRenderComplete", { detail: { html, url } }));
       });
   }
 

@@ -269,6 +269,75 @@
   .wrapper-error .error-message {
     display: block;
   }
+  #no-data-wishlist {
+    text-align: center;
+    padding-top: 4rem;
+  }
+  .loading-data {
+    text-align: center;
+    padding-top: 4rem;
+  }
+  .spinner {
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    border: 5px solid gray;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  #wishlist-list {
+    background-color: #f3f3f3;
+    list-style-type: none;
+    padding: 2rem 1.5rem;
+  }
+  #wishlist-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 0;
+    border-bottom: 1px solid #ccc !important;
+    border-top: 1px solid #ccc !important;
+  }
+  #wishlist-list .block-wishlist-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    flex-basis: 70%;
+  }
+  #wishlist-list .block-wishlist-item img {
+    flex-basis: 15%;
+  }
+  #wishlist-list .block-wishlist-item span {
+    flex-basis: 85%;
+    font-size: 1.6rem;
+  }
+  .block-button-wishlist button {
+    padding: 0 1rem;
+    min-width: calc(7rem + var(--buttons-border-width) * 2);
+    flex-basis: 30%;
+  }
+  .block-button-wishlist .add-to-cart {
+    background-color: #fff;
+    color: #000;
+  }
+
+  @media screen and (max-width: 767px) {
+    #wishlist-list li {
+      display: block;
+    }
+    .block-button-wishlist {
+      text-align: center;
+    }
+  }
 
 {%- endstyle -%}
 
@@ -290,6 +359,7 @@
           <li><a href="#customer_info">{{ 'customer.profile.title' | t }}</a></li>
           <li><a href="#customer_order">{{ 'customer.orders.title' | t }}</a></li>
           <li><a href="#customer_address">{{ 'customer.addresses.title' | t }}</a></li>
+          <li><a href="#customer_wishlist">{{ 'customer.wishlist.title' | t }}</a></li>
         </ul>
     </div>
     <div class="customer-content">
@@ -299,28 +369,28 @@
           <table class="customer-info">
             <tbody>
               <tr>
-                  <td>{{ 'customer.profile.first_name' | t }}:</td>
-                  <td>{{ customer.first_name }}</td>
+                <td>{{ 'customer.profile.first_name' | t }}:</td>
+                <td>{{ customer.first_name }}</td>
               </tr>
               <tr>
                 <td>{{ 'customer.profile.last_name' | t }}:</td>
                 <td>{{ customer.last_name }}</td>
               </tr>
               <tr>
-                  <td>{{ 'customer.profile.email' | t }}:</td>
-                  <td>{{ customer.email }}</td>
+                <td>{{ 'customer.profile.email' | t }}:</td>
+                <td>{{ customer.email }}</td>
               </tr>
               <tr>
-                  <td>{{ 'customer.profile.password' | t }}:</td>
-                  <td>●●●●●●●●●●</td>
+                <td>{{ 'customer.profile.password' | t }}:</td>
+                <td>●●●●●●●●●●</td>
               </tr>
               <tr>
-                  <td>{{ 'customer.profile.gender' | t }}:</td>
-                  <td>{{ customer.metafields.custom.gender }}</td>
+                <td>{{ 'customer.profile.gender' | t }}:</td>
+                <td>{{ customer.metafields.custom.gender }}</td>
               </tr>
               <tr>
-                  <td>{{ 'customer.profile.birthday' | t }}:</td>
-                  <td>{{ customer.metafields.custom.birthday }}</td>
+                <td>{{ 'customer.profile.birthday' | t }}:</td>
+                <td>{{ customer.metafields.custom.birthday }}</td>
               </tr>
             </tbody>
           </table>
@@ -852,6 +922,21 @@
           </div>
         {%- endpaginate -%}
       </div>
+      <div id="customer_wishlist">
+        <h2>{{ 'customer.wishlist.title' | t }}</h2>
+        <ul
+          id="wishlist-list"
+          style="display: none;"
+          data-domain-generate-api="{{ settings.domain_generate_api }}"
+          data-customer-id="{{ customer.id }}"
+          data-confirm-remove="{{ 'customer.wishlist.confirm_remove' | t }}"
+          data-add-to-cart="{{ 'products.product.add_to_cart' | t }}"
+          data-remove-wishlist="{{ 'customer.addresses.delete' | t }}"
+          data-sold-out="{{ 'products.product.sold_out' | t }}"
+        ></ul>
+        <div id="no-data-wishlist" style="display: none;">{{ 'customer.wishlist.no_items' | t }}</div>
+        <div class="loading-data"><span class="spinner"></span></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1113,6 +1198,7 @@
     typeof CustomerAddresses !== 'undefined' && new CustomerAddresses();
   });
 </script>
+<script src="{{ 'wishlist-main-account.js' | asset_url }}" defer="defer"></script>
 {% schema %}
 {
   "name": "t:sections.main-account.name",
