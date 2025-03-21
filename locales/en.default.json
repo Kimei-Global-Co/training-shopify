@@ -439,6 +439,21 @@
       "delete_success": "Address deleted successfully",
       "delete_error": "Address deletion failed"
     },
+    "wishlist": {
+      "title": "Wishlist",
+      "add_to_wishlist": "Add to wishlist",
+      "remove_from_wishlist": "Remove from wishlist",
+      "added_to_wishlist": "Added to wishlist",
+      "removed_from_wishlist": "Removed from wishlist",
+      "empty": "Your wishlist is empty",
+      "add_to_wishlist_success": "Added to wishlist successfully",
+      "add_to_wishlist_error": "Error adding to wishlist",
+      "remove_from_wishlist_success": "Removed from wishlist successfully",
+      "remove_from_wishlist_error": "Error removing from wishlist",
+      "confirm_remove": "Are you sure you wish to remove this item from your wishlist?",
+      "no_items": "You have no items in your wishlist.",
+      "login_required": "You must be logged in to manage your wishlist. Click OK to go to the login page.",
+    },
     "log_in": "Log in",
     "log_out": "Log out",
     "login_page": {

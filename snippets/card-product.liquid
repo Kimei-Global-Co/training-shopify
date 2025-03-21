@@ -46,7 +46,31 @@
     data-lazy-load-all-variants="{{ lazy_load_all_variants }}"
   >
     <div class="card-wrapper product-card-wrapper underline-links-hover">
-      {% render 'wishlisthero-collection-product' with product: card_product %}
+      <button
+        type="submit"
+        name="add_wishlist"
+        class="wishlist-icon-plp"
+        data-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
+        {% if customer %}
+          onclick="handleWishlist(this)"
+        {% else %}
+          onclick="confirmLogin()"
+        {% endif %}
+        value="{{ card_product.selected_or_first_available_variant.id }}"
+      ></button>
+      <div
+        id="wishlist-data"
+        style="display: none;"
+        data-domain-generate-api="{{ settings.domain_generate_api }}"
+        data-customer-id="{{ customer.id }}"
+        data-shop-domain="{{ shop.domain }}"
+        data-icon-heart-empty="{{ 'icon-heart-empty.svg' | asset_url }}"
+        data-icon-heart-black="{{ 'icon-heart-black.svg' | asset_url }}"
+        data-wishlist-title="{{ 'customer.wishlist.title' | t }}"
+        data-login-required="{{ 'customer.wishlist.login_required' | t }}"
+        data-wishlist-added="{{ 'customer.wishlist.added_to_wishlist' | t }}"
+        data-wishlist-page="PLP"
+      ></div>
       {% render 'product-flag' with product: card_product %}
       <div
         class="
@@ -657,8 +681,23 @@
     </div>
   </div>
 {%- endif -%}
+<script src="{{ 'wishlist-product.js' | asset_url }}" defer="defer"></script>
 <style>
   .card-wrapper {
     height: auto;
+  }
+  .wishlist-icon-plp {
+    position: absolute;
+    padding: 0.75rem;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
+    border: none;
+    background: none;
+  }
+  .wishlist-icon-plp:hover {
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
   }
 </style>

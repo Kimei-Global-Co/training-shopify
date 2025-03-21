@@ -29,6 +29,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (e.target.matches('input[type="radio"][data-section-id="' + sectionId + '"]')) {
                     var card = e.target.closest(`.card-product-custom-div[data-section-id="${sectionId}"]`);
                     var variantId = e.target.getAttribute('data-variant-id');
+                    if (card) {
+                        var wishlistButton = card.querySelector(".wishlist-icon-plp");
+                        if (wishlistButton) {
+                            wishlistButton.value = variantId;
+                        }
+                    }
                     var variantData = variantDataMap[variantId];
                     if (!variantData) {
                         console.warn("No data found for variant:", variantId);

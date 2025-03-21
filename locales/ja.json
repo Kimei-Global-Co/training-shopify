@@ -438,6 +438,21 @@
       "delete_success": "住所が正常に削除されました",
       "delete_error": "住所の削除に失敗しました"
     },
+    "wishlist": {
+      "title": "ウィッシュリスト",
+      "add_to_wishlist": "ウィッシュリストに追加",
+      "remove_from_wishlist": "ウィッシュリストから削除",
+      "added_to_wishlist": "ウィッシュリストに追加されました",
+      "removed_from_wishlist": "ウィッシュリストから削除されました",
+      "empty": "ウィッシュリストは空です",
+      "add_to_wishlist_success": "ウィッシュリストに追加されました",
+      "add_to_wishlist_error": "ウィッシュリストに追加できませんでした",
+      "remove_from_wishlist_success": "ウィッシュリストから削除されました",
+      "remove_from_wishlist_error": "ウィッシュリストから削除できませんでした",
+      "confirm_remove": "このアイテムをウィッシュリストから削除してもよろしいですか?",
+      "no_items": "ウィッシュリストにアイテムがありません",
+      "login_required": "ウィッシュリストを管理するにはログインする必要があります。[OK] をクリックしてログイン ページに進みます。"
+    },
     "log_in": "ログイン",
     "log_out": "ログアウト",
     "login_page": {

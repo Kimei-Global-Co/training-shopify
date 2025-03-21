@@ -10,6 +10,11 @@
   Usage:
   {% render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id, show_pickup_availability: true %}
 {% endcomment %}
+<style>
+  #wishlisthero-product-page-button-container {
+    display: none;
+  }
+</style>
 <div {{ block.shopify_attributes }}>
   {%- if product != blank -%}
     {%- liquid
@@ -99,6 +104,38 @@
             {%- endif -%}
         </div>
       {%- endform -%}
+      <div
+        id="wishlist-data"
+        style="display: none;"
+        data-domain-generate-api="{{ settings.domain_generate_api }}"
+        data-customer-id="{{ customer.id }}"
+        data-shop-domain="{{ shop.domain }}"
+        data-icon-heart-empty="{{ 'icon-heart-empty.svg' | asset_url }}"
+        data-icon-heart-black="{{ 'icon-heart-black.svg' | asset_url }}"
+        data-wishlist-title="{{ 'customer.wishlist.title' | t }}"
+        data-login-required="{{ 'customer.wishlist.login_required' | t }}"
+        data-wishlist-added="{{ 'customer.wishlist.added_to_wishlist' | t }}"
+        data-wishlist-page="PDP"
+      ></div>
+      <button
+        type="submit"
+        name="add_wishlist"
+        value="{{ product.selected_or_first_available_variant.id }}"
+        class="wishlist-button product-form__submit button button--full-width button--secondary"
+        style="display: none; margin-top: 10px;"
+        onclick="handleWishlist(this)"
+      ></button>
+      {% unless customer %}
+        <button
+          type="button"
+          class="wishlist-button product-form__submit button button--full-width button--secondary"
+          style="margin-top: 10px;"
+          onclick="confirmLogin()"
+        >
+          <span class="svg-wrapper pr-2">{{ 'icon-heart-empty.svg' | inline_asset_content }}</span> &nbsp; {{ 'customer.wishlist.title' | t }}
+        </button>
+        <script></script>
+      {% endunless %}
     </product-form>
   {%- else -%}
     <div class="product-form">
@@ -150,5 +187,6 @@
     <script src="{{ 'pickup-availability.js' | asset_url }}" defer="defer"></script>
   {%- endif -%}
 
+  <script src="{{ 'wishlist-product.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'register-out-of-stock-handler.js' | asset_url }}" defer="defer"></script>
 </div>
