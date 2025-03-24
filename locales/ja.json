@@ -63,7 +63,10 @@
   "newsletter": {
     "label": "メール",
     "success": "ご登録ありがとうございます",
-    "button_label": "登録"
+    "button_label": "登録",
+    "email_required": "必須項目です",
+    "email_existed": "このメールはすでに登録されています",
+    "email_format": "正しい形式のメールアドレスを入力してください"
   },
   "accessibility": {
     "skip_to_text": "コンテンツに進む",

@@ -63,7 +63,10 @@
   "newsletter": {
     "label": "Email",
     "success": "Thanks for subscribing",
-    "button_label": "Subscribe"
+    "button_label": "Subscribe",
+    "email_required": "This field is required",
+    "email_existed": "This email has already been registered",
+    "email_format": "Please enter a valid email address"
   },
   "accessibility": {
     "skip_to_text": "Skip to content",
