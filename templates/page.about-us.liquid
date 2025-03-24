@@ -1,0 +1,143 @@
+{% layout 'page' %}
+
+<div class="about-us-section">
+    <h1>{{ 'about_us.title' | t }}</h1>
+
+    <!-- Slideshow Section -->
+    <div class="slideshow-container">
+        {% assign images = 'slide1.webp,slide2.webp,slide3.webp' | split: ',' %}
+        {% for image in images %}
+        <div class="mySlides fade">
+            <img src="{{ image | asset_url }}" style="width:100%">
+        </div>
+        {% endfor %}
+
+        <!-- Navigation Dots -->
+        <div style="text-align: center;">
+            {% for image in images %}
+            <span class="dot" onclick="currentSlide({{ forloop.index }})"></span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <p>
+        {{ 'about_us.welcome' | t }}
+    </p>
+
+    <h2>{{ 'about_us.mission_title' | t }}</h2>
+    <p>
+        {{ 'about_us.mission_text' | t }}
+    </p>
+
+    <h2>{{ 'about_us.values_title' | t }}</h2>
+    <ul>
+        <li>{{ 'about_us.values_customer_centric' | t }}</li>
+        <li>{{ 'about_us.values_quality' | t }}</li>
+        <li>{{ 'about_us.values_sustainability' | t }}</li>
+    </ul>
+
+    <h2>{{ 'about_us.story_title' | t }}</h2>
+    <p>
+        {{ 'about_us.story_text' | t }}
+    </p>
+
+    <h2>{{ 'about_us.join_us_title' | t }}</h2>
+    <p>
+        {{ 'about_us.join_us_text' | t }}
+    </p>
+</div>
+
+<style>
+    .about-us-section {
+        max-width: 800px;
+        margin: auto;
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    .about-us-section h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .about-us-section h2 {
+        font-size: 2rem;
+        margin-top: 20px;
+    }
+
+    .about-us-section p,
+    .about-us-section ul {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .about-us-section ul {
+        list-style-type: disc;
+        padding-left: 20px;
+    }
+
+    /* Slideshow Styles */
+    .slideshow-container {
+        position: relative;
+        max-width: 100%;
+        margin: auto;
+    }
+
+    .mySlides {
+        display: none;
+    }
+
+    .dot {
+        height: 15px;
+        width: 15px;
+        margin: 0 2px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.6s ease;
+        cursor: pointer;
+    }
+
+    .active {
+        background-color: #717171;
+    }
+</style>
+
+<script>
+    let slideIndex = 0; // Start from the first slide
+    showSlides(); // Call the function initially
+
+    function showSlides() {
+        let i;
+        const slides = document.getElementsByClassName("mySlides");
+        const dots = document.getElementsByClassName("dot");
+
+        // Hide all slides initially
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        slideIndex++; // Move to the next slide
+
+        if (slideIndex > slides.length) {
+            slideIndex = 1; // Loop back to the first slide
+        }
+
+        // Show the current slide
+        slides[slideIndex - 1].style.display = "block";
+
+        // Update active dot
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        dots[slideIndex - 1].className += " active";
+
+        // Change slide every 3 seconds (3000 ms)
+        setTimeout(showSlides, 3000);
+    }
+
+    function currentSlide(n) {
+        slideIndex = n - 1;
+        showSlides();
+    }
+</script>

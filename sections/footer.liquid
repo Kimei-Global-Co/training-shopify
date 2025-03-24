@@ -520,7 +520,7 @@
               <div class="column" style="flex: 1; min-height: 300px; padding: 20px;">
                 <h3>COMPANY</br>会社概要</h3>
                 <h4>
-                  <a href="/" class="copyright__content">
+                  <a href="/pages/about-us" class="copyright__content">
                     KSHOPについて
                   </a>
                 </h4>
@@ -545,6 +545,10 @@
                       </li>
                     {%- endif -%}
                   {%- endfor -%}
+                  <li>
+                    <small class="copyright__content"><a href="/pages/kshop-privacy">{{ 'privacy_policy.title_privacy' | t }}</a></small
+                    >
+                  </li>
                 </ul>
               {%- endif -%}
             </div>
