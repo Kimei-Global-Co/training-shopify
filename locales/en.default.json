@@ -584,5 +584,37 @@
       "send_on": "YYYY-MM-DD",
       "send_on_label": "Send on (optional)"
     }
+  },
+  "about_us": {
+    "title": "About Us",
+    "welcome": "Welcome to KSHOP, where innovation meets quality.",
+    "mission_title": "Our Mission",
+    "mission_text": "Our mission is to revolutionize the shopping experience...",
+    "values_title": "Our Values",
+    "values_customer_centric": "Customer-Centric: We prioritize our customers' needs.",
+    "values_quality": "Quality Assurance: We offer only the best products.",
+    "values_sustainability": "Sustainability: We are committed to environmentally sustainable practices.",
+    "story_title": "Our Story",
+    "story_text": "KSHOP started as a small venture driven by a desire to disrupt the retail landscape.",
+    "join_us_title": "Join Us",
+    "join_us_text": "We invite you to explore our offerings and join the KSHOP family."
+  },
+  "privacy_policy": {
+    "title": "Privacy Policy",
+    "title_privacy": "KShop Privacy Policy",
+    "general_info": "General Information",
+    "general_info_text": "This privacy policy describes how KSHOP collects, uses, and protects your information.",
+    "user_info": "User Information",
+    "user_info_text": "We may collect personal information such as your name, address, email, and account details to serve you better.",
+    "use_of_info": "Use of Information",
+    "use_of_info_text": "Your personal information may be used to improve our services, send updates, and process orders.",
+    "security_of_info": "Security of Information",
+    "security_of_info_text": "We will take necessary measures to protect your personal information from unauthorized access.",
+    "choices": "Choices",
+    "choices_text": "You have the right to refuse providing personal information and can request to delete your information from our system at any time.",
+    "policy_changes": "Policy Changes",
+    "policy_changes_text": "We reserve the right to update our privacy policy at any time and will notify you about these changes.",
+    "thanks": "Thank you for using KSHOP services!",
+    "table_of_contents": "Table of Contents"
   }
 }

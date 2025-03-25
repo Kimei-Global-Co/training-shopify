@@ -1,0 +1,111 @@
+{% layout 'page' %}
+
+<div class="privacy-policy-container">
+    <div class="privacy-policy-content">
+        <h1>{{ 'privacy_policy.title' | t }}</h1>
+
+        <h2 id="thong-tin-chung">1. {{ 'privacy_policy.general_info' | t }}</h2>
+        <p>{{ 'privacy_policy.general_info_text' | t }}</p>
+
+        <h2 id="thong-tin-nguoi-dung">2. {{ 'privacy_policy.user_info' | t }}</h2>
+        <p>{{ 'privacy_policy.user_info_text' | t }}</p>
+
+        <h2 id="su-dung-thong-tin">3. {{ 'privacy_policy.use_of_info' | t }}</h2>
+        <p>{{ 'privacy_policy.use_of_info_text' | t }}</p>
+
+        <h2 id="bao-mat-thong-tin">4. {{ 'privacy_policy.security_of_info' | t }}</h2>
+        <p>{{ 'privacy_policy.security_of_info_text' | t }}</p>
+
+        <h2 id="quyen-lua-chon">5. {{ 'privacy_policy.choices' | t }}</h2>
+        <p>{{ 'privacy_policy.choices_text' | t }}</p>
+
+        <h2 id="thay-doi-chinh-sach">6. {{ 'privacy_policy.policy_changes' | t }}</h2>
+        <p>{{ 'privacy_policy.policy_changes_text' | t }}</p>
+
+        <p>{{ 'privacy_policy.thanks' | t }}</p>
+    </div>
+
+    <div class="privacy-policy-sidebar">
+        <h2>{{ 'privacy_policy.table_of_contents' | t }}</h2>
+        <nav>
+            <ul>
+                <li><a href="#thong-tin-chung" class="smooth-scroll">{{ 'privacy_policy.general_info' | t }}</a></li>
+                <li><a href="#thong-tin-nguoi-dung" class="smooth-scroll">{{ 'privacy_policy.user_info' | t }}</a></li>
+                <li><a href="#su-dung-thong-tin" class="smooth-scroll">{{ 'privacy_policy.use_of_info' | t }}</a></li>
+                <li><a href="#bao-mat-thong-tin" class="smooth-scroll">{{ 'privacy_policy.security_of_info' | t }}</a></li>
+                <li><a href="#quyen-lua-chon" class="smooth-scroll">{{ 'privacy_policy.choices' | t }}</a></li>
+                <li><a href="#thay-doi-chinh-sach" class="smooth-scroll">{{ 'privacy_policy.policy_changes' | t }}</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<style>
+    .privacy-policy-container {
+        display: flex;
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .privacy-policy-content {
+        flex: 1;
+        padding-right: 20px;
+    }
+
+    .privacy-policy-sidebar {
+        position: sticky;
+        top: 20px;
+        width: 200px;
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+
+    .privacy-policy-content h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .privacy-policy-content h2 {
+        font-size: 2rem;
+        margin-top: 20px;
+    }
+
+    .privacy-policy-content p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    nav ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+    }
+
+    nav ul li a {
+        text-decoration: underline;
+        color: #007bff;
+    }
+</style>
+
+<script>
+    document.querySelectorAll('.smooth-scroll').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            const headerOffset = 80; // Chiều cao bạn muốn nhìn thấy phần nội dung
+            const elementPosition = targetElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>
