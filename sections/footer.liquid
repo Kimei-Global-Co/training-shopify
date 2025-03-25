@@ -59,6 +59,55 @@
   .question-servive {
     font-size: small;
   }
+  .newsletter-form__field-wrapper.error .field::after,
+  .newsletter-form__field-wrapper.error .field__input:focus {
+    box-shadow: 0 var(--inputs-border-width) 0 0 #d91c1c !important;
+  }
+  .newsletter-form__field-wrapper .field::after {
+    box-shadow: 0 var(--inputs-border-width) 0 0 rgb(var(--color-foreground)) !important;
+  }
+  .newsletter-form__field-wrapper .field__input:focus {
+    box-shadow: none;
+  }
+  .newsletter-form__field-wrapper .field__input {
+    background: rgba(var(--color-background), 0.1);
+  }
+  .newsletter-form__field-wrapper.error .field .field__label,
+  .newsletter-form__field-wrapper.error .field__input {
+    color: #d91c1c;
+  }
+  .newsletter-form__field-wrapper span#email-error {
+    display:none;
+  }
+  .newsletter-form__field-wrapper.error span#email-error {
+    display: block;
+    color: #d91c1c;
+    margin-top: 5px;
+    font-size:12px;
+  }
+  .arrow {
+    display: inline-block;
+    position: relative;
+    width: 8px;
+    height: 8px;
+  }
+  .arrow::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .newsletter-form__button {
+    width: 8rem;
+  }
+  .field__button>.svg-wrapper {
+    width: 4rem;
+  }
 {%- endstyle -%}
 
 <footer class="footer color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
@@ -256,15 +305,6 @@
                         </span>
                       </button>
                     </div>
-                    {%- if form.errors -%}
-                      <small class="newsletter-form__message form__message" id="ContactFooter-error">
-                        <span class="svg-wrapper">
-                          {{- 'icon-error.svg' | inline_asset_content -}}
-                        </span>
-                        {{- form.errors.translated_fields.email | capitalize }}
-                        {{ form.errors.messages.email -}}
-                      </small>
-                    {%- endif -%}
                   </div>
                   {%- if form.posted_successfully? -%}
                     <h3
@@ -395,6 +435,9 @@
                           autocorrect="off"
                           autocapitalize="off"
                           autocomplete="email"
+                          data-error-existed="{{ 'newsletter.email_existed' | t }}"
+                          data-required="{{ 'newsletter.email_required' | t }}"
+                          data-format="{{ 'newsletter.email_format' | t }}"
                           {% if form.errors %}
                             autofocus
                             aria-invalid="true"
@@ -416,19 +459,10 @@
                           aria-label="{{ 'newsletter.button_label' | t }}"
                         >
                           <span class="svg-wrapper">
-                            {{- 'icon-arrow.svg' | inline_asset_content -}}
+                            {{ 'newsletter.button_label' | t }}<span class="arrow"></span>
                           </span>
                         </button>
                       </div>
-                      {%- if form.errors -%}
-                        <small class="newsletter-form__message form__message" id="ContactFooter-error">
-                          <span class="svg-wrapper">
-                            {{- 'icon-error.svg' | inline_asset_content -}}
-                          </span>
-                          {{- form.errors.translated_fields.email | capitalize }}
-                          {{ form.errors.messages.email }}
-                        </small>
-                      {%- endif -%}
                     </div>
                     {%- if form.posted_successfully? -%}
                       <h3
@@ -559,6 +593,7 @@
     {%- endunless -%}
   {%- endif -%}
 </footer>
+<script src="{{ 'newsletter.js' | asset_url }}" defer="defer"></script>
 
 {% schema %}
 {
