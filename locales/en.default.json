@@ -455,7 +455,7 @@
       "remove_from_wishlist_error": "Error removing from wishlist",
       "confirm_remove": "Are you sure you wish to remove this item from your wishlist?",
       "no_items": "You have no items in your wishlist.",
-      "login_required": "You must be logged in to manage your wishlist. Click OK to go to the login page.",
+      "login_required": "You must be logged in to manage your wishlist. Click OK to go to the login page."
     },
     "log_in": "Log in",
     "log_out": "Log out",
@@ -536,7 +536,11 @@
       "gender_required": "Gender is required",
       "year_required": "Year is required",
       "month_required": "Month is required",
-      "day_required": "Day is required"
+      "day_required": "Day is required",
+      "success_title": "Successful Registration",
+      "success": "You have successfully registered an account. Please check your email to verify your account and use our services.",
+      "activate_account_success": "You have successfully registered an account! Please log in below!",
+      "redirect_home_page": "Home page"
     },
     "reset_password": {
       "title": "Reset account password",
