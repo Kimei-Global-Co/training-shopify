@@ -1,0 +1,380 @@
+{{ 'customer.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    text-align: center;
+  }
+  .close {
+    position: absolute;
+    right: 2rem;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (max-width: 749px) {
+    .line-between {
+      display: block!important;
+      height: 1px;
+      background-color: rgb(var(--color-foreground), 0.5);
+    }
+    .create-account {
+      border: 1px solid black!important;
+      padding: 1rem 2rem;
+      color: white!important;
+      text-decoration: none!important;
+      background-color: rgba(var(--color-button), var(--alpha-button-background))!important;
+    }
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+    .page-login {
+      display: flex;
+      margin: 5rem auto;
+      justify-content: center;
+    }
+    .customer {
+      width: 50%;
+      margin: 0!important;
+    }
+    .register {
+      width: 50%;
+      margin: 0!important;
+    }
+    .line-between {
+      display: block!important;
+      width: 1px;
+      background-color: rgb(var(--color-foreground), 0.5);
+    }
+    .create-account {
+      background-color: black!important;
+      color: white!important;
+      text-decoration: none!important;
+      padding: 1.25rem 3rem!important;
+      font-size: 1.5rem!important;
+    }
+    .create-account:hover {
+      background-color: #595656!important;
+    }
+  }
+  label.required::after {
+    content: " *";
+    color: red;
+    font-weight: bold;
+    margin-left: 0px;
+  }
+  h2.form__message {
+    display: none;
+  }
+  .errors {
+    color: red;
+  }
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 3px solid white;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 1rem;
+  }
+  .customer button {
+    margin: 4rem auto;
+  }
+  .hidden {
+    display: none;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .page-login {
+    background-color: white; width: 70%; position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+{%- endstyle -%}
+<div class="modal" id="loginModal">
+  <div class="page-login">
+    <span class="close">&times;</span>
+    <div class="customer login section-{{ section.id }}-padding">
+      <h1 id="recover" tabindex="-1">
+        {{ 'customer.recover_password.title' | t }}
+      </h1>
+      <div>
+        <p>
+          {{ 'customer.recover_password.subtext' | t }}
+        </p>
+      </div>
+
+      <h1 id="login" tabindex="-1">
+        {{ 'customer.login_page.title' | t }}
+      </h1>
+      <div class="error-email-password hidden" style="color:red;">{{ 'customer.login_page.error' | t }}</div>
+      <div>
+        {%- form 'customer_login' -%}
+          <div class="field">
+            <input
+              type="email"
+              name="customer[email]"
+              id="CustomerEmail"
+              autocomplete="email"
+              autocorrect="off"
+              autocapitalize="off"
+              placeholder="{{ 'customer.login_page.email' | t }}"
+              required
+            >
+            <label for="CustomerEmail" class="required">
+              {{ 'customer.login_page.email' | t }}
+            </label>
+          </div>
+
+          {%- if form.password_needed -%}
+            <div class="field">
+              <input
+                type="password"
+                value=""
+                name="customer[password]"
+                id="CustomerPassword"
+                autocomplete="current-password"
+                placeholder="{{ 'customer.login_page.password' | t }}"
+                required
+              >
+              <label for="CustomerPassword" class="required">
+                {{ 'customer.login_page.password' | t }}
+              </label>
+            </div>
+
+            <a href="#recover">
+              {{ 'customer.login_page.forgot_password' | t }}
+            </a>
+          {%- endif -%}
+
+          <button class="btn-submit btn-submit-login-modal" style="display:flex; ">
+            <span class="spinner hidden"></span>
+            {{ 'customer.login_page.sign_in' | t }}
+          </button>
+        {%- endform -%}
+      </div>
+    </div>
+    <div class="line-between"></div>
+    <div class="customer login section-{{ section.id }}-padding">
+      <h1 id="login" tabindex="-1">
+        {{ 'customer.login_page.create_account' | t }}
+      </h1>
+      <p>
+        {{ 'customer.login_page.create_account_subtext' | t }}
+      </p>
+      <a href="{{ routes.account_register_url }}" class="create-account">
+        {{ 'customer.login_page.create_account' | t }}
+      </a>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Add product variant id to button login
+    document.querySelectorAll('.wishlist-icon-plp').forEach((button) => {
+      button.addEventListener('click', function (event) {
+        let variantId = this.getAttribute('data-variant-id');
+        let modal = document.querySelector('#loginModal .btn-submit');
+        if (modal) {
+          modal.setAttribute('data-variant-id', variantId);
+        }
+      });
+    });
+
+    // Set variant id to button login when in PDP
+    const wishlistPDP = document.querySelector('.wishlist-button');
+    if (wishlistPDP) {
+      wishlistPDP.addEventListener('click', function (event) {
+        let variantId = this.value;
+        let modalButton = document.querySelector('#loginModal .btn-submit');
+        if (modalButton) {
+          modalButton.setAttribute('data-variant-id', variantId);
+        }
+      });
+    }
+
+    // Click show/hide modal
+    var modal = document.getElementById('loginModal');
+    var closeBtn = document.querySelector('.close');
+    document.addEventListener('click', function (event) {
+      const button = event.target.closest('.open-login-modal');
+      if (button) {
+        modal.style.display = 'block';
+      }
+      // Close modal if clicking outside or on close button
+      if (event.target === modal || event.target === closeBtn) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Submit login form
+    const form = document.getElementById('customer_login');
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault();
+      const errorLogin = document.querySelector('.error-email-password');
+      errorLogin.classList.add('hidden');
+      let email = document.querySelector('input[name="customer[email]"]');
+      let password = document.querySelector('input[name="customer[password]"]');
+      const spinner = this.querySelector('.spinner');
+      spinner.classList.remove('hidden');
+      let values = {};
+      values['email'] = email.value;
+      values['password'] = password.value;
+      values['locale'] = document.documentElement.lang;
+      const apiCustomerCheckUrl = `{{ settings.domain_generate_api }}/api/shopify/customers/login-check`;
+      fetch(apiCustomerCheckUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Shopify-Shop-Domain': `{{ shop.domain }}`,
+        },
+        body: JSON.stringify(values),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status == 200) {
+            autoLoginShopify(values['email'], values['password']);
+          }
+          if (data.errors) {
+            if (data.errors.email_password_fail) {
+              document.querySelector('.errors-custom-text').innerText = data.errors.email_password_fail;
+            }
+            if (data.errors.email) {
+              document.querySelector('.error-email').innerText = data.errors.email[0];
+            }
+            if (data.errors.password) {
+              document.querySelector('.error-password').innerText = data.errors.password[0];
+            }
+          }
+        })
+        .catch((error) => console.error('Error:', error));
+    });
+  });
+
+  // Login after create account successful
+  function autoLoginShopify(email, password) {
+    fetch('/account/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        'customer[email]': email,
+        'customer[password]': password,
+        form_type: 'customer_login',
+        utf8: '✓',
+      }),
+    })
+      .then((response) => response.text())
+      .then((data) => {
+        if (data.includes('/account/logout')) {
+          getCustomerId();
+        }
+      })
+      .catch((error) => console.error('Error:', error));
+  }
+
+  // Get customer id
+  function getCustomerId() {
+    let spinner = document.querySelector('.btn-submit-login-modal .spinner');
+    fetch('/account')
+      .then((response) => response.text())
+      .then((html) => {
+        let match = html.match(/data-customer-id="(\d+)"/);
+        if (match) {
+          let customerId = match[1];
+          const errorLogin = document.querySelector('.error-email-password');
+
+          errorLogin.classList.add('hidden');
+          spinner.classList.add('hidden');
+          if (customerId) {
+            const variant = document.querySelector('.btn-submit-login-modal');
+            const variantId = variant.getAttribute('data-variant-id');
+            addToWishlist(variantId, customerId);
+            window.location.reload(true);
+          } else {
+            errorLogin.classList.remove('hidden');
+          }
+        } else {
+          const errorLogin = document.querySelector('.error-email-password');
+          errorLogin.classList.remove('hidden');
+          spinner.classList.add('hidden');
+        }
+      })
+      .catch((error) => console.error('Error:', error));
+  }
+
+  // Add product variant to wishlist
+  function addToWishlist(variantId, customerId) {
+    fetch(`{{ settings.domain_generate_api }}/api/shopify/wishlists/customers/${customerId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Shop-Domain': `{{ shop.domain }}`,
+      },
+      body: JSON.stringify({
+        product_variant_id: variantId,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {})
+      .catch((error) => console.error('Error:', error));
+  }
+</script>
+{% schema %}
+{
+  "name": "t:sections.main-login.name",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}

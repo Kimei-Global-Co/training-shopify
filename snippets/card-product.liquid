@@ -46,18 +46,24 @@
     data-lazy-load-all-variants="{{ lazy_load_all_variants }}"
   >
     <div class="card-wrapper product-card-wrapper underline-links-hover">
-      <button
-        type="submit"
-        name="add_wishlist"
-        class="wishlist-icon-plp"
-        data-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
-        {% if customer %}
+      {% if customer %}
+        <button
+          type="submit"
+          name="add_wishlist"
+          class="wishlist-icon-plp"
+          data-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
           onclick="handleWishlist(this)"
-        {% else %}
-          onclick="confirmLogin()"
-        {% endif %}
-        value="{{ card_product.selected_or_first_available_variant.id }}"
-      ></button>
+          value="{{ card_product.selected_or_first_available_variant.id }}"
+        ></button>
+      {% else %}
+        <button
+          type="submit"
+          name="add_wishlist"
+          class="wishlist-icon-plp open-login-modal"
+          data-variant-id="{{ card_product.selected_or_first_available_variant.id }}"
+          value="{{ card_product.selected_or_first_available_variant.id }}"
+        ></button>
+      {% endif %}
       <div
         id="wishlist-data"
         style="display: none;"

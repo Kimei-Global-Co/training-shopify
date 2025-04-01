@@ -117,25 +117,24 @@
         data-wishlist-added="{{ 'customer.wishlist.added_to_wishlist' | t }}"
         data-wishlist-page="PDP"
       ></div>
-      <button
-        type="submit"
-        name="add_wishlist"
-        value="{{ product.selected_or_first_available_variant.id }}"
-        class="wishlist-button product-form__submit button button--full-width button--secondary"
-        style="display: none; margin-top: 10px;"
-        onclick="handleWishlist(this)"
-      ></button>
-      {% unless customer %}
+      {% if customer %}
         <button
-          type="button"
+          type="submit"
+          name="add_wishlist"
+          value="{{ product.selected_or_first_available_variant.id }}"
           class="wishlist-button product-form__submit button button--full-width button--secondary"
           style="margin-top: 10px;"
-          onclick="confirmLogin()"
+          onclick="handleWishlist(this)"
+        ></button>
+      {% else %}
+        <button
+          type="button"
+          class="wishlist-button product-form__submit button button--full-width button--secondary open-login-modal"
+          style="margin-top: 10px;"
         >
           <span class="svg-wrapper pr-2">{{ 'icon-heart-empty.svg' | inline_asset_content }}</span> &nbsp; {{ 'customer.wishlist.title' | t }}
         </button>
-        <script></script>
-      {% endunless %}
+      {% endif %}
     </product-form>
   {%- else -%}
     <div class="product-form">

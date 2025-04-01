@@ -98,6 +98,9 @@ function fetchWishlistPDP() {
                         break;
                     }
                 }
+            } else {
+                wishlistButton['name'] = 'add_wishlist';
+                wishlistButton.innerHTML = `<span class="svg-wrapper pr-2"><img src="${iconHeartEmpty}" alt="Wishlist Icon" width="20"></span> &nbsp; ${wishlistTitle}`;
             }
         })
         .catch((error) => console.error('Error fetching wishlist:', error));
@@ -105,13 +108,14 @@ function fetchWishlistPDP() {
 
 // Update wishlist icon in PLP
 function updateWishlistButton(wishlistButton, variantId) {
-    let isInWishlist = data.some(wishlist => wishlist.product_variant_id == variantId);
-    if (isInWishlist) {
-        wishlistButton.name = 'remove_wishlist';
-        wishlistButton.innerHTML = `<span class="svg-wrapper pr-2"><img src="${iconHeartBlack}" alt="Wishlist Icon"></span>`;
-    } else {
-        wishlistButton.name = 'add_wishlist';
-        wishlistButton.innerHTML = `<span class="svg-wrapper pr-2"><img src="${iconHeartEmpty}" alt="Wishlist Icon"></span>`;
+    wishlistButton.name = 'add_wishlist';
+    wishlistButton.innerHTML = `<span class="svg-wrapper pr-2"><img src="${iconHeartEmpty}" alt="Wishlist Icon"></span>`;
+    if (data.length > 0) {
+        let isInWishlist = data.some(wishlist => wishlist.product_variant_id == variantId);
+        if (isInWishlist) {
+            wishlistButton.name = 'remove_wishlist';
+            wishlistButton.innerHTML = `<span class="svg-wrapper pr-2"><img src="${iconHeartBlack}" alt="Wishlist Icon"></span>`;
+        }
     }
 }
 
@@ -126,7 +130,7 @@ function updateWishlistButtons() {
 // Load all wishlist
 async function loadDataWishlist() {
     if (!customerId) {
-        return [];
+        return data = {};
     }
     try {
         const response = await fetch(getWishlistUrl, {
@@ -142,14 +146,7 @@ async function loadDataWishlist() {
         return data = await response.json();
     } catch (error) {
         console.error("Error fetching wishlist:", error);
-        return data;
-    }
-}
-
-// Redirect to login page
-function confirmLogin() {
-    if (confirm(loginRequired)) {
-        window.location.href = '/account/login';
+        return data = {};
     }
 }
 
