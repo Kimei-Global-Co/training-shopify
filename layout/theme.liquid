@@ -407,5 +407,14 @@
     {% if settings.domain_generate_api %}
       <script src="{{ 'config-server.js' | asset_url }}" defer="defer"></script>
     {% endif %}
+    {%- unless customer -%}
+      {%- if request.path != '/account/login' -%}
+        {%- if request.path != '/account/register' -%}
+          <div id="modal-custom">
+            {% section 'modal-login' %}
+          </div>
+        {% endif %}
+      {% endif %}
+    {%- endunless -%}
   </body>
 </html>

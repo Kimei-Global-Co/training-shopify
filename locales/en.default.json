@@ -471,7 +471,8 @@
       "title": "Login",
       "sign_in": "Sign in",
       "submit": "Submit",
-      "alternate_provider_separator": "or"
+      "alternate_provider_separator": "or",
+      "error": "Incorrect email or password"
     },
     "order": {
       "title": "Order {{ name }}",

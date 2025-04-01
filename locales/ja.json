@@ -470,7 +470,8 @@
       "title": "ログイン",
       "sign_in": "サインイン",
       "submit": "送信",
-      "alternate_provider_separator": "または"
+      "alternate_provider_separator": "または",
+      "error": "メールまたはパスワードが正しくありません"
     },
     "orders": {
       "title": "注文履歴",
