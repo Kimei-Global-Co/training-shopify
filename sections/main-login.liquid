@@ -68,6 +68,39 @@
   .errors {
     color: red;
   }
+  #activation-success {
+    text-align: center !important;
+    color: green;
+  }
+  .spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 3px solid white;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 1rem;
+  }
+  .customer button {
+    margin: 4rem auto;
+  }
+  .hidden {
+    display: none;
+  }
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .errors-custom-text,
+  .error-email,
+  .error-password {
+    color: red;
+  }
 {%- endstyle -%}
 
 {%- if section.settings.enable_shop_login_button == false -%}
@@ -128,6 +161,10 @@
     <h1 id="login" tabindex="-1">
       {{ 'customer.login_page.title' | t }}
     </h1>
+    <h3 class="errors-custom-text"></h3>
+    <h3 id="activation-success" style="display:none;">
+      {{ 'customer.register.activate_account_success' | t }}
+    </h3>
     <div>
       {%- if recover_success == true -%}
         <h3 class="form__message" tabindex="-1" autofocus>
@@ -178,6 +215,7 @@
             {{ 'customer.login_page.email' | t }}
           </label>
         </div>
+        <p style="width: 100%; text-align: left; margin: 0;"><small class="error-email"></small></p>
 
         {%- if form.password_needed -%}
           <div class="field">
@@ -196,13 +234,15 @@
               {{ 'customer.login_page.password' | t }}
             </label>
           </div>
+          <p style="width: 100%; text-align: left; margin: 0;"><small class="error-password"></small></p>
 
           <a href="#recover">
             {{ 'customer.login_page.forgot_password' | t }}
           </a>
         {%- endif -%}
 
-        <button>
+        <button class="btn-submit" style="display:flex; ">
+          <span class="spinner hidden"></span>
           {{ 'customer.login_page.sign_in' | t }}
         </button>
       {%- endform -%}
@@ -234,6 +274,61 @@
     </a>
   </div>
 </div>
+<script>
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('status') === '200' && params.get('message') === 'success') {
+    document.getElementById('activation-success').style.display = 'block';
+  }
+  window.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('customer_login');
+    form.addEventListener('submit', async function (event) {
+      document.getElementById('activation-success').style.display = "none";
+      document.querySelector('.error-email').innerText = '';
+      document.querySelector('.error-password').innerText = '';
+      document.querySelector('.errors-custom-text').innerText = '';
+      let email = document.querySelector('input[name="customer[email]"]');
+      let password = document.querySelector('input[name="customer[password]"]');
+      const apiCustomerCheckUrl = '{{ settings.domain_generate_api }}' + '/api/shopify/customers/login-check';
+      const lang = document.documentElement.lang;
+      const spinner = this.querySelector('.spinner');
+      spinner.classList.remove('hidden');
+
+      event.preventDefault();
+      let values = {};
+      values['email'] = email.value;
+      values['password'] = password.value;
+      values['locale'] = lang;
+
+      fetch(apiCustomerCheckUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Shopify-Shop-Domain': `{{ shop.domain }}`,
+        },
+        body: JSON.stringify(values),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status == 200) {
+            form.submit();
+          }
+          if (data.errors) {
+            if (data.errors.email_password_fail) {
+              document.querySelector('.errors-custom-text').innerText = data.errors.email_password_fail;
+            }
+            if (data.errors.email) {
+              document.querySelector('.error-email').innerText = data.errors.email[0];
+            }
+            if (data.errors.password) {
+              document.querySelector('.error-password').innerText = data.errors.password[0];
+            }
+          }
+          spinner.classList.add('hidden');
+        })
+        .catch((error) => console.error('Error:', error));
+    });
+  });
+</script>
 
 {% schema %}
 {

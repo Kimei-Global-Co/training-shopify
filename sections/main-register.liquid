@@ -120,6 +120,7 @@
       formData.forEach((value, key) => {
         values[key] = value;
       });
+      values['locale'] = document.documentElement.lang;
 
       if (error_flg === false) {
         spinner.classList.remove('hidden');
@@ -154,7 +155,10 @@
               errorElement.textContent = 'Email ' + emailErrors.join(', ');
             }
           } else {
-            autoLoginShopify(values.email, values.password);
+            const registerBlock = document.querySelector('.customer.register');
+            registerBlock.classList.add('hidden');
+            const registerSuccessful = document.querySelector('.register-successful');
+            registerSuccessful.classList.remove('hidden');
           }
         } catch (error) {
           console.error('Fetch Error:', error);
@@ -353,8 +357,71 @@
     position: absolute;
     left: 1rem;
   }
+  .register-successful {
+    max-width: 80rem!important;
+  }
+  .register-successful {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    min-height: 60rem;
+  }
+  .btn-register-successful {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+  }
+  .btn-register-successful .btn-login,
+  .btn-register-successful .btn-index {
+    min-width: calc(12rem + var(--buttons-border-width)* 2);
+    min-height: calc(4.5rem + var(--buttons-border-width)* 2);
+    font-size: 1.5rem;
+    letter-spacing: .1rem;
+    line-height: calc(1 + .2 / var(--font-body-scale));
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    padding: 0 3rem;
+    cursor: pointer;
+    font: inherit;
+    font-size: 1.5rem;
+    text-decoration: none;
+  }
+  .btn-register-successful .btn-login {
+    color: #fff;
+    transition: all 0.1s ease-in-out;
+    background-color: rgba(var(--color-button), var(--alpha-button-background));
+  }
+  .btn-register-successful .btn-login:hover {
+    color: #fff;
+    background-color: gray;
+  }
+  .btn-register-successful .btn-index {
+    border: 1px solid black;
+    transition: all 0.1s ease-in-out;
+    color: black;
+  }
+  .btn-register-successful .btn-index:hover {
+    color: #fff;
+    background-color: gray;
+    border: 1px solid #fff;
+  }
 {%- endstyle -%}
 
+<div class="customer register-successful hidden">
+  <h1>{{ 'customer.register.success_title' | t }}</h1>
+  <div>
+    <p>{{ 'customer.register.success' | t }}</p>
+    <div class="btn-register-successful">
+      <p>
+        <a class="btn-login" href="/account/login">{{ 'customer.log_in' | t }}</a>
+      </p>
+      <p>
+        <a class="btn-index" href="/">{{ 'customer.register.redirect_home_page' | t }}</a>
+      </p>
+    </div>
+  </div>
+</div>
 <div class="customer register section-{{ section.id }}-padding">
   <h1>
     {{ 'customer.register.title' | t }}

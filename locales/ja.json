@@ -510,7 +510,11 @@
       "gender_required": "性別は必須です",
       "year_required": "年は必須です",
       "month_required": "月は必須です",
-      "day_required": "日は必須です"
+      "day_required": "日は必須です",
+      "success_title": "登録成功",
+      "success": "アカウントの登録が完了しました。メールを確認してアカウントを認証し、当サービスをご利用ください。",
+      "activate_account_success": "アカウントの登録に成功しました！下記よりログインしてください。",
+      "redirect_home_page": "ホームページ"
     },
     "reset_password": {
       "title": "アカウントのパスワードをリセットする",
