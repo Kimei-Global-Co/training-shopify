@@ -54,7 +54,7 @@
   style="--ratio: {{ media.aspect_ratio | default: 1.0 }}; --preview-ratio: {{ media.preview_image.aspect_ratio | default: 1.0 }};"
 >
   {%- if position == 1 -%}
-    {% render 'product-flag' with product: product %}
+    {% render 'product-flag' with product, product: product %}
   {%- endif -%}
   <modal-opener
     class="product__modal-opener product__modal-opener--{{ media.media_type }}"
@@ -173,3 +173,13 @@
     {%- endif -%}
   {%- endif -%}
 </div>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'product-flag' with product: product %}"
+  to: "{% render 'product-flag' with product, product: product %}"
+  position: 2362..2420
+{% endcomment %}

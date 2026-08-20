@@ -77,7 +77,7 @@
         data-wishlist-added="{{ 'customer.wishlist.added_to_wishlist' | t }}"
         data-wishlist-page="PLP"
       ></div>
-      {% render 'product-flag' with product: card_product %}
+      {% render 'product-flag' with product, product: card_product %}
       <div
         class="
           card card--{{ settings.card_style }}
@@ -640,8 +640,8 @@
     endif
   -%}
   <div class="card-wrapper product-card-wrapper underline-links-hover">
-    {% render 'wishlisthero-collection-product' with product: card_product %}
-    {% render 'product-flag' with product: card_product %}
+    {% render 'wishlisthero-collection-product' with product, product: card_product %}
+    {% render 'product-flag' with product, product: card_product %}
     <div
       class="
         card card--{{ settings.card_style }}
@@ -707,3 +707,20 @@
     cursor: pointer;
   }
 </style>
+{% comment %}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'product-flag' with product: card_product %}"
+  to: "{% render 'product-flag' with product, product: card_product %}"
+  position: 3862..3925
+- from: "{% render 'wishlisthero-collection-product' with product: card_product %}"
+  to: "{% render 'wishlisthero-collection-product' with product, product: card_product
+    %}"
+  position: 35945..36027
+- from: "{% render 'product-flag' with product: card_product %}"
+  to: "{% render 'product-flag' with product, product: card_product %}"
+  position: 36032..36095
+{% endcomment %}
